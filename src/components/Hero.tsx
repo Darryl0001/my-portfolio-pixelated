@@ -395,10 +395,7 @@ export default function Hero() {
         >
           {/* Bottom Left: Counter / Talk Link */}
           <div className="flex items-center gap-4">
-            <div className="flex items-baseline gap-1.5 font-mono">
-              <span className="text-base font-bold">001</span>
-              <span className="text-[9px] text-fg-muted">/ 005</span>
-            </div>
+         
 
             <a
               href="#contact"
@@ -446,7 +443,7 @@ export default function Hero() {
                 sm:text-sm
               "
             >
-              Software Developer.
+              Full-Stack Developer.
             </span>
           </div>
         </div>
