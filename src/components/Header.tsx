@@ -1,52 +1,32 @@
 export default function Header() {
   return (
-    <header className="relative z-50">
-      <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-6 sm:px-8 lg:px-12">
-
+    <header className="relative z-50 h-16">
+      <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-6 sm:px-8 lg:px-12">
         <a
-          href="#"
-          className="
-            text-sm
-            font-semibold
-            tracking-[-0.02em]
-          "
+          href="#home"
+          className="text-sm font-semibold tracking-[-0.02em]"
         >
           Darryl.
         </a>
 
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-7 md:flex">
           <a
             href="#projects"
-            className="
-              text-sm
-              text-fg-muted
-              transition-colors
-              hover:text-fg-main
-            "
+            className="text-sm text-fg-muted transition-colors hover:text-fg-main"
           >
             Work
           </a>
 
           <a
             href="#about"
-            className="
-              text-sm
-              text-fg-muted
-              transition-colors
-              hover:text-fg-main
-            "
+            className="text-sm text-fg-muted transition-colors hover:text-fg-main"
           >
             About
           </a>
 
           <a
             href="#contact"
-            className="
-              text-sm
-              text-fg-muted
-              transition-colors
-              hover:text-fg-main
-            "
+            className="text-sm text-fg-muted transition-colors hover:text-fg-main"
           >
             Contact
           </a>
@@ -66,7 +46,6 @@ export default function Header() {
         >
           Let's talk
         </a>
-
       </div>
     </header>
   );

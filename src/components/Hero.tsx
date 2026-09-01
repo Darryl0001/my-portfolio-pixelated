@@ -2,181 +2,452 @@ import { ArrowUpRight } from "lucide-react";
 
 export default function Hero() {
   return (
-    <section className="relative min-h-[calc(100svh-72px)] overflow-hidden">
-      {/* Subtle background grid */}
+    <section
+      id="home"
+      className="
+        relative
+        h-[calc(100svh-64px)]
+        w-full
+        overflow-hidden
+        px-6
+        py-3
+        sm:px-8
+        lg:px-12
+      "
+    >
+      {/* =====================================================
+          BACKGROUND GRID
+      ====================================================== */}
       <div
         aria-hidden="true"
         className="
           pointer-events-none
-          absolute inset-0
-          bg-[linear-gradient(to_right,rgba(21,21,21,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(21,21,21,0.035)_1px,transparent_1px)]
-          bg-[size:40px_40px]
-          mask-[linear-gradient(to_bottom,black_0%,transparent_90%)]
+          absolute
+          inset-0
+          opacity-40
+          [background-image:linear-gradient(to_right,rgba(21,21,21,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(21,21,21,0.04)_1px,transparent_1px)]
+          [background-size:32px_32px]
         "
       />
 
-      <div className="relative mx-auto flex min-h-[calc(100svh-72px)] max-w-7xl items-center px-6 py-16 sm:px-8 lg:px-12">
-        <div className="grid w-full items-center gap-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
+      {/* Left pixel marker */}
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none
+          absolute
+          left-0
+          top-1/2
+          hidden
+          -translate-y-1/2
+          lg:block
+        "
+      >
+        <div className="flex gap-1">
+          <span className="size-2 bg-fg-main" />
+          <span className="size-2 bg-accent" />
+          <span className="size-2 bg-fg-main" />
+        </div>
 
-          {/* --------------------------------------------------
-              COPY
-          -------------------------------------------------- */}
+        <div className="mt-1 flex gap-1">
+          <span className="size-2 bg-fg-main" />
+          <span className="size-2 bg-fg-main" />
+          <span className="size-2 bg-accent" />
+        </div>
+      </div>
 
-          <div className="relative z-10 max-w-3xl">
+      {/* =====================================================
+          MAIN SCREEN CONTAINER
+      ====================================================== */}
+      <div
+        className="
+          relative
+          mx-auto
+          flex
+          h-full
+          max-w-7xl
+          flex-col
+          justify-between
+        "
+      >
+        {/* ===================================================
+            TOP ROW: Headline Left | Description Right
+        ==================================================== */}
+        <div
+          className="
+            grid
+            grid-cols-1
+            items-start
+            gap-4
+            pt-2
+            lg:grid-cols-12
+            lg:gap-6
+            lg:pt-4
+          "
+        >
+          {/* Main Headline (Left) */}
+          <div className="lg:col-span-6">
             <h1
               className="
-                text-[clamp(3.75rem,8vw,7.5rem)]
-                font-black
-                leading-[0.84]
-                tracking-[-0.075em]
+                font-display
+                text-[clamp(2.5rem,5.5vw,5.5rem)]
+                font-bold
+                uppercase
+                leading-[0.82]
+                tracking-[-0.07em]
               "
             >
-              <span className="block">Software</span>
+              <span
+                className="
+                  mb-2
+                  block
+                  font-mono
+                  text-[0.28em]
+                  font-normal
+                  normal-case
+                  tracking-[0.08em]
+                  text-fg-muted
+                "
+              >
+                Hi! I am, Darryl
+              </span>
 
-              <span className="relative mt-2 block w-fit">
-                Developer
+              <span className="block">I BUILD</span>
+
+              <span className="relative block w-fit">
+                SOFTWARE
                 <span
                   aria-hidden="true"
                   className="
                     absolute
-                    -bottom-1
+                    bottom-0
                     left-0
                     -z-10
-                    h-[0.16em]
+                    h-[0.2em]
+                    w-full
+                    bg-accent
+                  "
+                />
+              </span>
+
+              <span className="relative block w-fit">
+                THAT MAKES
+                <span
+                  aria-hidden="true"
+                  className="
+                    absolute
+                    bottom-0
+                    left-0
+                    -z-10
+                    h-[0.2em]
+                    w-full
+                    bg-accent
+                  "
+                />
+              </span>
+
+              <span className="relative block w-fit">
+                SENSE.
+                <span
+                  aria-hidden="true"
+                  className="
+                    absolute
+                    bottom-0
+                    left-0
+                    -z-10
+                    h-[0.2em]
                     w-full
                     bg-accent
                   "
                 />
               </span>
             </h1>
-
-            <p
-              className="
-                mt-9
-                max-w-xl
-                text-base
-                leading-7
-                text-fg-muted
-                sm:text-lg
-              "
-            >
-              I build practical software across web, mobile, and
-              backend systems.
-            </p>
-
-            <div className="mt-9">
-              <a
-                href="#projects"
-                className="
-                  group
-                  inline-flex
-                  items-center
-                  gap-3
-                  border
-                  border-fg-main
-                  bg-fg-main
-                  px-5
-                  py-3.5
-                  text-sm
-                  font-medium
-                  text-bg-main
-                  transition-transform
-                  duration-200
-                  hover:-translate-y-1
-                "
-              >
-                View my work
-
-                <ArrowUpRight
-                  size={17}
-                  strokeWidth={1.8}
-                  className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                />
-              </a>
-            </div>
           </div>
 
-          {/* --------------------------------------------------
-              PHOTO
-          -------------------------------------------------- */}
+          {/* Spacer for Center Portrait */}
+          <div className="hidden lg:col-span-1 lg:block" />
 
-          <div className="relative mx-auto w-full max-w-md lg:mx-0 lg:ml-auto">
+          {/* Description (Right) */}
+          <div className="lg:col-span-5 lg:pl-6">
+            <p
+              className="
+                max-w-xs
+                text-xs
+                leading-5
+                text-fg-muted
+                sm:text-sm
+                sm:leading-6
+                lg:ml-auto
+                lg:text-right
+              "
+            >
+              I design and build web and mobile applications with a focus on real
+              problems, practical solutions, and thoughtful details.
+            </p>
+          </div>
+        </div>
 
-            {/* Lime offset block */}
+        {/* ===================================================
+            CENTER PORTRAIT & FLOATING CTA (OVERLAY)
+        ==================================================== */}
+        <div
+          className="
+            pointer-events-none
+            absolute
+            inset-0
+            flex
+            items-center
+            justify-center
+          "
+        >
+          {/* Large Center Portrait Card */}
+          <div
+            className="
+              pointer-events-auto
+              relative
+              z-10
+              w-[clamp(260px,46vh,370px)]
+            "
+          >
+            {/* Lime pixel offset backing */}
             <div
               aria-hidden="true"
               className="
                 absolute
-                -right-3
-                -bottom-3
-                h-full
-                w-full
+                inset-0
+                translate-x-3.5
+                translate-y-3.5
                 bg-accent
+                [clip-path:polygon(0_8px,8px_8px,8px_0,calc(100%-8px)_0,calc(100%-8px)_8px,100%_8px,100%_calc(100%-8px),calc(100%-8px)_calc(100%-8px),calc(100%-8px)_100%,8px_100%,8px_calc(100%-8px),0_calc(100%-8px))]
               "
             />
 
-            {/* Pixel corner details */}
-            <div
-              aria-hidden="true"
-              className="
-                absolute
-                -top-4
-                -left-4
-                z-10
-                grid
-                grid-cols-3
-                gap-1.5
-              "
-            >
-              <span className="size-2 bg-fg-main" />
-              <span className="size-2 bg-fg-main" />
-              <span className="size-2 bg-fg-main" />
-              <span className="size-2 bg-fg-main" />
-              <span className="size-2 bg-accent" />
-              <span className="size-2 bg-fg-main" />
-            </div>
-
+            {/* Frame Container */}
             <div
               className="
                 relative
-                aspect-[4/5]
-                overflow-hidden
-                border
+                border-2
                 border-fg-main
-                bg-bg-surface
+                bg-fg-main
+                p-1.5
+                [clip-path:polygon(0_8px,8px_8px,8px_0,calc(100%-8px)_0,calc(100%-8px)_8px,100%_8px,100%_calc(100%-8px),calc(100%-8px)_calc(100%-8px),calc(100%-8px)_100%,8px_100%,8px_calc(100%-8px),0_calc(100%-8px))]
               "
             >
-              <img
-                src="/profile.jpg"
-                alt="Darryl Macarandan"
-                className="
-                  h-full
-                  w-full
-                  object-cover
-                  object-center
-                  grayscale-[15%]
-                "
-              />
-            </div>
+              <div className="bg-bg-main p-1">
+                {/* Status Bar */}
+                <div
+                  className="
+                    flex
+                    h-6
+                    items-center
+                    justify-between
+                    border-b-2
+                    border-fg-main
+                    px-2
+                  "
+                >
+                  <div className="flex items-center gap-1.5">
+                    <span className="size-1.5 bg-accent" />
+                    <span className="font-mono text-[8px] font-medium uppercase tracking-[0.14em]">
+                      Player 01
+                    </span>
+                  </div>
 
-            {/* Small pixel marker */}
-            <div
-              aria-hidden="true"
+                  <span className="font-mono text-[8px] uppercase tracking-[0.14em] text-fg-muted">
+                    Online
+                  </span>
+                </div>
+
+                {/* Main Photo */}
+                <div className="group relative mt-1 aspect-[4/5] overflow-hidden bg-bg-surface">
+                  <img
+                    src="/my_profile.jpg"
+                    alt="Darryl Macarandan"
+                    className="
+                      h-full
+                      w-full
+                      object-cover
+                      object-center
+                      transition-transform
+                      duration-500
+                      group-hover:scale-[1.025]
+                    "
+                  />
+
+                  {/* Pixel grid overlay */}
+                  <div
+                    aria-hidden="true"
+                    className="
+                      pointer-events-none
+                      absolute
+                      inset-0
+                      opacity-[0.08]
+                      [background-image:linear-gradient(to_right,rgba(21,21,21,0.5)_1px,transparent_1px),linear-gradient(to_bottom,rgba(21,21,21,0.5)_1px,transparent_1px)]
+                      [background-size:8px_8px]
+                      mix-blend-multiply
+                    "
+                  />
+                </div>
+
+                {/* Footer Label */}
+                <div
+                  className="
+                    flex
+                    items-end
+                    justify-between
+                    border-t
+                    border-fg-main
+                    px-2
+                    py-2
+                  "
+                >
+                  <div>
+                    <p className="text-[11px] font-semibold tracking-tight">
+                      Darryl Macarandan
+                    </p>
+
+                    <p
+                      className="
+                        mt-0.5
+                        font-mono
+                        text-[7px]
+                        uppercase
+                        tracking-[0.12em]
+                        text-fg-muted
+                      "
+                    >
+                      Software Developer
+                    </p>
+                  </div>
+
+                  <span className="font-mono text-[8px] text-fg-muted">
+                    01
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Floating Right Action Badge */}
+          <div
+            className="
+              pointer-events-auto
+              absolute
+              right-0
+              top-[62%]
+              z-20
+              hidden
+              -translate-y-1/2
+              border-2
+              border-fg-main
+              bg-bg-elevated
+              p-3.5
+              shadow-[4px_4px_0px_#151515]
+              lg:block
+            "
+          >
+            <p className="font-mono text-[9px] uppercase tracking-wider text-fg-muted">
+              Primary Action
+            </p>
+            <a
+              href="#projects"
               className="
-                absolute
-                -right-5
-                top-1/2
-                grid
-                grid-cols-2
-                gap-1.5
+                group
+                mt-1.5
+                inline-flex
+                items-center
+                gap-2.5
+                bg-fg-main
+                px-3.5
+                py-2
+                text-xs
+                font-semibold
+                uppercase
+                tracking-[0.06em]
+                text-bg-main
+                transition-all
+                hover:bg-accent
+                hover:text-fg-main
               "
             >
-              <span className="size-2 bg-fg-main" />
-              <span className="size-2 bg-accent" />
-              <span className="size-2 bg-accent" />
-              <span className="size-2 bg-fg-main" />
+              View My Work
+              <ArrowUpRight size={14} />
+            </a>
+          </div>
+        </div>
+
+        {/* ===================================================
+            BOTTOM ROW: Metadata Left | Role Right
+        ==================================================== */}
+        <div
+          className="
+            relative
+            z-20
+            flex
+            shrink-0
+            items-end
+            justify-between
+            border-t
+            border-border/50
+            pb-1.5
+            pt-2
+          "
+        >
+          {/* Bottom Left: Counter / Talk Link */}
+          <div className="flex items-center gap-4">
+            <div className="flex items-baseline gap-1.5 font-mono">
+              <span className="text-base font-bold">001</span>
+              <span className="text-[9px] text-fg-muted">/ 005</span>
             </div>
 
+            <a
+              href="#contact"
+              className="
+                hidden
+                text-[10px]
+                font-semibold
+                uppercase
+                tracking-[0.1em]
+                text-fg-muted
+                underline
+                decoration-border-strong
+                underline-offset-4
+                transition-colors
+                hover:text-fg-main
+                sm:block
+              "
+            >
+              Let's talk
+            </a>
+          </div>
+
+          {/* Bottom Right: Role Signature */}
+          <div className="text-right">
+            <span
+              className="
+                block
+                font-mono
+                text-[7px]
+                uppercase
+                tracking-[0.2em]
+                text-fg-subtle
+              "
+            >
+              Role
+            </span>
+
+            <span
+              className="
+                font-display
+                text-xs
+                font-bold
+                uppercase
+                tracking-tight
+                sm:text-sm
+              "
+            >
+              Software Developer.
+            </span>
           </div>
         </div>
       </div>
