@@ -1,3 +1,4 @@
+import { motion, type Variants } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
 const projects = [
@@ -75,6 +76,69 @@ const projects = [
   },
 ];
 
+const EASE_BRUTAL = [0.16, 1, 0.3, 1] as const;
+
+const cardVariants: Variants = {
+  rest: {
+    x: 0,
+    y: 0,
+    boxShadow: "0px 0px 0px #151515",
+    zIndex: 1,
+  },
+
+  hover: {
+    x: -3,
+    y: -3,
+    boxShadow: "4px 4px 0px #151515",
+    zIndex: 10,
+    transition: {
+      duration: 0.15,
+      ease: EASE_BRUTAL,
+    },
+  },
+
+  tap: {
+    x: 0,
+    y: 0,
+    boxShadow: "0px 0px 0px #151515",
+    transition: {
+      duration: 0.08,
+    },
+  },
+};
+
+const imageVariants: Variants = {
+  rest: {
+    scale: 1,
+  },
+
+  hover: {
+    scale: 1.025,
+    transition: {
+      duration: 0.25,
+      ease: EASE_BRUTAL,
+    },
+  },
+};
+
+const arrowVariants: Variants = {
+  rest: {
+    x: 0,
+    y: 0,
+    opacity: 0,
+  },
+
+  hover: {
+    x: 2,
+    y: -2,
+    opacity: 1,
+    transition: {
+      duration: 0.15,
+      ease: EASE_BRUTAL,
+    },
+  },
+};
+
 function ProjectCard({
   project,
   large = false,
@@ -83,8 +147,12 @@ function ProjectCard({
   large?: boolean;
 }) {
   return (
-    <a
+    <motion.a
       href="#"
+      variants={cardVariants}
+      initial="rest"
+      whileHover="hover"
+      whileTap="tap"
       className={`
         group
         relative
@@ -92,78 +160,43 @@ function ProjectCard({
         ${large ? "lg:col-span-2" : ""}
       `}
     >
-      {/* Image */}
-      <div
-        className="
-          relative
-          overflow-hidden
-          border-2
-          border-fg-main
-          bg-fg-main
-        "
-      >
-        {/* Pixel offset */}
+      <div className="relative overflow-hidden border-2 border-fg-main bg-fg-main">
         <div
           aria-hidden="true"
           className="
-            absolute
-            inset-0
-            translate-x-2
-            translate-y-2
+            absolute inset-0
+            translate-x-2 translate-y-2
             bg-accent
-            transition-transform
-            duration-200
+            transition-transform duration-200
             group-hover:translate-x-3
             group-hover:translate-y-3
           "
         />
 
-        {/* Screenshot */}
-        <div
-          className="
-            relative
-            aspect-[16/10]
-            overflow-hidden
-            bg-bg-surface
-          "
-        >
-          <img
+        <div className="relative aspect-[16/10] overflow-hidden bg-bg-surface">
+          <motion.img
+            variants={imageVariants}
             src={project.image}
             alt={project.title}
-            className="
-              h-full
-              w-full
-              object-cover
-              transition-transform
-              duration-500
-              group-hover:scale-[1.025]
-            "
+            className="h-full w-full object-cover"
           />
 
-          {/* Hover overlay */}
           <div
             className="
               pointer-events-none
-              absolute
-              inset-0
+              absolute inset-0
               bg-fg-main/0
-              transition-colors
-              duration-300
+              transition-colors duration-200
               group-hover:bg-fg-main/5
             "
           />
 
-          {/* Project number */}
           <span
             className="
-              absolute
-              left-3
-              top-3
-              border
-              border-fg-main
+              absolute left-3 top-3
+              border border-fg-main
               bg-bg-main
-              px-2
-              py-1
+              px-2 py-1
               font-mono
               text-[9px]
               font-medium
@@ -173,46 +206,32 @@ function ProjectCard({
             {project.number}
           </span>
 
-          {/* Arrow */}
-          <span
+          <motion.span
+            variants={arrowVariants}
             className="
-              absolute
-              right-3
-              top-3
-              flex
-              size-8
-              items-center
-              justify-center
-              border
-              border-fg-main
+              absolute right-3 top-3
+              flex size-8
+              items-center justify-center
+              border border-fg-main
               bg-bg-main
-              opacity-0
-              transition-all
-              duration-200
-              group-hover:translate-x-0.5
-              group-hover:-translate-y-0.5
-              group-hover:opacity-100
             "
           >
-            <ArrowUpRight size={15} strokeWidth={2} />
-          </span>
+            <ArrowUpRight
+              size={15}
+              strokeWidth={2}
+            />
+          </motion.span>
         </div>
 
-        {/* Project info */}
         <div
           className="
             relative
-            flex
-            items-end
-            justify-between
+            flex items-end justify-between
             gap-4
-            border-t-2
-            border-fg-main
+            border-t-2 border-fg-main
             bg-bg-main
-            px-3
-            py-3
-            sm:px-4
-            sm:py-3.5
+            px-3 py-3
+            sm:px-4 sm:py-3.5
           "
         >
           <div className="min-w-0">
@@ -257,7 +276,7 @@ function ProjectCard({
           </span>
         </div>
       </div>
-    </a>
+    </motion.a>
   );
 }
 
@@ -279,16 +298,7 @@ export default function Projects() {
       "
     >
       <div className="mx-auto max-w-7xl">
-        {/* Section intro */}
-        <div
-          className="
-            mb-10
-            flex
-            items-end
-            justify-between
-            sm:mb-12
-          "
-        >
+        <div className="mb-10 flex items-end justify-between sm:mb-12">
           <div>
             <span
               className="
@@ -332,42 +342,49 @@ export default function Projects() {
           </span>
         </div>
 
-        {/* =================================================
-            PROJECT GRID
-        ================================================== */}
-
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-4 lg:gap-6">
-          {/* Featured 01 */}
+        <div
+          className="
+            grid
+            grid-cols-1
+            gap-8
+            lg:grid-cols-4
+            lg:gap-6
+          "
+        >
           <ProjectCard
             project={projects[0]}
             large
           />
 
-          {/* 02 */}
-          <ProjectCard project={projects[1]} />
+          <ProjectCard
+            project={projects[1]}
+          />
 
-          {/* 03 */}
-          <ProjectCard project={projects[2]} />
+          <ProjectCard
+            project={projects[2]}
+          />
 
-          {/* 04 */}
-          <ProjectCard project={projects[3]} />
+          <ProjectCard
+            project={projects[3]}
+          />
 
-          {/* Featured 05 */}
           <ProjectCard
             project={projects[4]}
             large
           />
 
-          {/* 06 */}
-          <ProjectCard project={projects[5]} />
+          <ProjectCard
+            project={projects[5]}
+          />
 
-          {/* 07 */}
-          <ProjectCard project={projects[6]} />
+          <ProjectCard
+            project={projects[6]}
+          />
 
-          {/* 08 */}
-          <ProjectCard project={projects[7]} />
+          <ProjectCard
+            project={projects[7]}
+          />
 
-          {/* Featured 09 */}
           <ProjectCard
             project={projects[8]}
             large

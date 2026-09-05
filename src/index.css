@@ -62,7 +62,12 @@
 }
 
 html {
+  /* Smooth scroll for anchor navigation links */
   scroll-behavior: smooth;
+  /* Proximity snapping creates a smooth, weighted glide between sections */
+  scroll-snap-type: y proximity;
+  /* Enables native touch physics deceleration across mobile browsers */
+  -webkit-overflow-scrolling: touch;
 }
 
 body {
@@ -74,6 +79,16 @@ body {
   color: var(--color-fg-main);
 
   font-family: var(--font-sans);
+  
+  /* Prevents horizontal overflow layout shifts during smooth scrolls */
+  overflow-x: hidden;
+}
+
+/* Ensure main sections align smoothly to the top when scrolling */
+section,
+footer {
+  scroll-snap-align: start;
+  scroll-margin-top: 0px;
 }
 
 ::selection {
@@ -156,6 +171,7 @@ img {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+    scroll-snap-type: none;
   }
 
   *,

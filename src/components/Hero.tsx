@@ -1,4 +1,110 @@
+import { motion, type Variants } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+
+// Mechanical cubic-bezier easing for hard, snappy motion
+const EASE_BRUTAL = [0.16, 1, 0.3, 1] as const;
+
+// Orchestration container with crisp staggered delays
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.05,
+      delayChildren: 0.04,
+    },
+  },
+};
+
+// Masked vertical snap with slight overshoot scale for blocky impact
+const textLineVariants: Variants = {
+  hidden: { y: "110%", opacity: 0, scaleY: 1.15 },
+  visible: {
+    y: "0%",
+    opacity: 1,
+    scaleY: 1,
+    transition: { duration: 0.28, ease: EASE_BRUTAL },
+  },
+};
+
+// Accent underline wipe-in animation
+const underlineVariants: Variants = {
+  hidden: { scaleX: 0, originX: 0 },
+  visible: {
+    scaleX: 1,
+    transition: { duration: 0.3, delay: 0.25, ease: EASE_BRUTAL },
+  },
+};
+
+// Direct fade-in for secondary metadata
+const fadeInVariants: Variants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.25, ease: EASE_BRUTAL },
+  },
+};
+
+// Hard drop-in reveal for central portrait card
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: -24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.35, ease: EASE_BRUTAL },
+  },
+};
+
+// Hard offset lock for the lime backing block with snap-in delay
+const accentVariants: Variants = {
+  hidden: { x: 0, y: 0, opacity: 0 },
+  visible: {
+    x: 12,
+    y: 12,
+    opacity: 1,
+    transition: { duration: 0.2, delay: 0.15, ease: EASE_BRUTAL },
+  },
+};
+
+// Block interaction variants for the ID card
+const cardInteractiveVariants: Variants = {
+  rest: {
+    x: 0,
+    y: 0,
+  },
+  hover: {
+    x: -4,
+    y: -4,
+    transition: { duration: 0.1, ease: EASE_BRUTAL },
+  },
+  tap: {
+    x: 0,
+    y: 0,
+    transition: { duration: 0.04 },
+  },
+};
+
+// Block interaction variants for the CTA badge
+const ctaInteractiveVariants: Variants = {
+  rest: {
+    x: 0,
+    y: 0,
+    boxShadow: "4px 4px 0px #151515",
+  },
+  hover: {
+    x: -2,
+    y: -2,
+    boxShadow: "6px 6px 0px #151515",
+    transition: { duration: 0.1, ease: EASE_BRUTAL },
+  },
+  tap: {
+    x: 2,
+    y: 2,
+    boxShadow: "2px 2px 0px #151515",
+    transition: { duration: 0.04 },
+  },
+};
 
 export default function Hero() {
   return (
@@ -18,19 +124,26 @@ export default function Hero() {
         lg:py-3
       "
     >
-      <div
+      {/* Background Grid Pattern */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.4 }}
+        transition={{ duration: 0.3 }}
         aria-hidden="true"
         className="
           pointer-events-none
           absolute
           inset-0
-          opacity-40
           [background-image:linear-gradient(to_right,rgba(21,21,21,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(21,21,21,0.04)_1px,transparent_1px)]
           [background-size:32px_32px]
         "
       />
+
       {/* Left pixel marker */}
-      <div
+      <motion.div
+        initial={{ opacity: 0, x: -12 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.25, delay: 0.35, ease: EASE_BRUTAL }}
         aria-hidden="true"
         className="
           pointer-events-none
@@ -52,11 +165,13 @@ export default function Hero() {
           <span className="size-2 bg-fg-main" />
           <span className="size-2 bg-accent" />
         </div>
-      </div>
-      {/* =====================================================
-          MAIN SCREEN CONTAINER
-      ====================================================== */}
-      <div
+      </motion.div>
+
+      {/* MAIN SCREEN CONTAINER */}
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
         className="
           relative
           mx-auto
@@ -69,9 +184,7 @@ export default function Hero() {
           lg:gap-0
         "
       >
-        {/* ===================================================
-            TOP ROW: Headline Left | Description Right
-        ==================================================== */}
+        {/* TOP ROW: Headline Left | Description Right */}
         <div
           className="
             grid
@@ -96,7 +209,8 @@ export default function Hero() {
                 tracking-[-0.07em]
               "
             >
-              <span
+              <motion.span
+                variants={fadeInVariants}
                 className="
                   mb-2
                   block
@@ -109,60 +223,90 @@ export default function Hero() {
                 "
               >
                 Hi! I am, Darryl
+              </motion.span>
+
+              {/* Masked text reveals */}
+              <span className="block overflow-hidden py-0.5">
+                <motion.span variants={textLineVariants} className="block">
+                  I BUILD
+                </motion.span>
               </span>
-              <span className="block">I BUILD</span>
-              <span className="relative block w-fit">
-                SOFTWARE
-                <span
-                  aria-hidden="true"
-                  className="
-                    absolute
-                    bottom-0
-                    left-0
-                    -z-10
-                    h-[0.2em]
-                    w-full
-                    bg-accent
-                  "
-                />
+
+              <span className="block overflow-hidden py-0.5">
+                <motion.span
+                  variants={textLineVariants}
+                  className="relative block w-fit"
+                >
+                  SOFTWARE
+                  <motion.span
+                    variants={underlineVariants}
+                    aria-hidden="true"
+                    className="
+                      absolute
+                      bottom-0
+                      left-0
+                      -z-10
+                      h-[0.2em]
+                      w-full
+                      bg-accent
+                    "
+                  />
+                </motion.span>
               </span>
-              <span className="relative block w-fit">
-                THAT MAKES
-                <span
-                  aria-hidden="true"
-                  className="
-                    absolute
-                    bottom-0
-                    left-0
-                    -z-10
-                    h-[0.2em]
-                    w-full
-                    bg-accent
-                  "
-                />
+
+              <span className="block overflow-hidden py-0.5">
+                <motion.span
+                  variants={textLineVariants}
+                  className="relative block w-fit"
+                >
+                  THAT MAKES
+                  <motion.span
+                    variants={underlineVariants}
+                    aria-hidden="true"
+                    className="
+                      absolute
+                      bottom-0
+                      left-0
+                      -z-10
+                      h-[0.2em]
+                      w-full
+                      bg-accent
+                    "
+                  />
+                </motion.span>
               </span>
-              <span className="relative block w-fit">
-                SENSE.
-                <span
-                  aria-hidden="true"
-                  className="
-                    absolute
-                    bottom-0
-                    left-0
-                    -z-10
-                    h-[0.2em]
-                    w-full
-                    bg-accent
-                  "
-                />
+
+              <span className="block overflow-hidden py-0.5">
+                <motion.span
+                  variants={textLineVariants}
+                  className="relative block w-fit"
+                >
+                  SENSE.
+                  <motion.span
+                    variants={underlineVariants}
+                    aria-hidden="true"
+                    className="
+                      absolute
+                      bottom-0
+                      left-0
+                      -z-10
+                      h-[0.2em]
+                      w-full
+                      bg-accent
+                    "
+                  />
+                </motion.span>
               </span>
             </h1>
           </div>
+
           {/* Spacer for Center Portrait */}
           <div className="hidden lg:col-span-1 lg:block" />
+
           {/* Description (Right) */}
           <div className="lg:col-span-5 lg:pl-6">
-            <p
+            <motion.p
+              variants={fadeInVariants}
               className="
                 max-w-xs
                 text-xs
@@ -176,14 +320,11 @@ export default function Hero() {
             >
               I design and build web and mobile applications with a focus on real
               problems, practical solutions, and thoughtful details.
-            </p>
+            </motion.p>
           </div>
         </div>
-        {/* ===================================================
-            CENTER PORTRAIT & FLOATING CTA
-            Mobile/Tablet: normal stacked flow (no overlap)
-            Desktop (lg+): absolute overlay, identical to original
-        ==================================================== */}
+
+        {/* CENTER PORTRAIT & FLOATING CTA */}
         <div
           className="
             relative
@@ -204,7 +345,8 @@ export default function Hero() {
           "
         >
           {/* Large Center Portrait Card */}
-          <div
+          <motion.div
+            variants={cardVariants}
             className="
               relative
               z-10
@@ -215,21 +357,26 @@ export default function Hero() {
             "
           >
             {/* Lime pixel offset backing */}
-            <div
+            <motion.div
+              variants={accentVariants}
               aria-hidden="true"
               className="
                 absolute
                 inset-0
-                translate-x-3.5
-                translate-y-3.5
                 bg-accent
                 [clip-path:polygon(0_8px,8px_8px,8px_0,calc(100%-8px)_0,calc(100%-8px)_8px,100%_8px,100%_calc(100%-8px),calc(100%-8px)_calc(100%-8px),calc(100%-8px)_100%,8px_100%,8px_calc(100%-8px),0_calc(100%-8px))]
               "
             />
-            {/* Frame Container */}
-            <div
+
+            {/* Interactive Frame Container */}
+            <motion.div
+              variants={cardInteractiveVariants}
+              initial="rest"
+              whileHover="hover"
+              whileTap="tap"
               className="
                 relative
+                cursor-pointer
                 border-2
                 border-fg-main
                 bg-fg-main
@@ -257,6 +404,7 @@ export default function Hero() {
                     </span>
                   </div>
                 </div>
+
                 {/* Main Photo */}
                 <div className="group relative mt-1 aspect-[4/5] overflow-hidden bg-bg-surface">
                   <img
@@ -268,8 +416,8 @@ export default function Hero() {
                       object-cover
                       object-center
                       transition-transform
-                      duration-500
-                      group-hover:scale-[1.025]
+                      duration-150
+                      group-hover:scale-[1.02]
                     "
                   />
                   {/* Pixel grid overlay */}
@@ -286,6 +434,7 @@ export default function Hero() {
                     "
                   />
                 </div>
+
                 {/* Footer Label */}
                 <div
                   className="
@@ -317,20 +466,15 @@ export default function Hero() {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          {/* Primary Action Badge
-              Mobile/Tablet: visible, in flow, centered below portrait
-              Desktop (lg+): floating, absolutely positioned, identical to original */}
-          <div
+            </motion.div>
+          </motion.div>
+
+          {/* Primary Action Badge */}
+          <motion.div
+            variants={fadeInVariants}
             className="
               relative
               z-20
-              border-2
-              border-fg-main
-              bg-bg-elevated
-              p-3.5
-              shadow-[4px_4px_0px_#151515]
               lg:pointer-events-auto
               lg:absolute
               lg:right-0
@@ -338,39 +482,54 @@ export default function Hero() {
               lg:-translate-y-1/2
             "
           >
-            <p className="font-mono text-[9px] uppercase tracking-wider text-fg-muted">
-              Primary Action
-            </p>
-            <a
-              href="#projects"
+            <motion.div
+              variants={ctaInteractiveVariants}
+              initial="rest"
+              whileHover="hover"
+              whileTap="tap"
               className="
-                group
-                mt-1.5
-                inline-flex
-                items-center
-                gap-2.5
-                bg-fg-main
-                px-3.5
-                py-2
-                text-xs
-                font-semibold
-                uppercase
-                tracking-[0.06em]
-                text-bg-main
-                transition-all
-                hover:bg-accent
-                hover:text-fg-main
+                border-2
+                border-fg-main
+                bg-bg-elevated
+                p-3.5
               "
             >
-              View My Work
-              <ArrowUpRight size={14} />
-            </a>
-          </div>
+              <p className="font-mono text-[9px] uppercase tracking-wider text-fg-muted">
+                Primary Action
+              </p>
+              <a
+                href="#projects"
+                className="
+                  group
+                  mt-1.5
+                  inline-flex
+                  items-center
+                  gap-2.5
+                  bg-fg-main
+                  px-3.5
+                  py-2
+                  text-xs
+                  font-semibold
+                  uppercase
+                  tracking-[0.06em]
+                  text-bg-main
+                  transition-colors
+                  hover:bg-accent
+                  hover:text-fg-main
+                "
+              >
+                View My Work
+                <span className="inline-block transition-transform duration-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                  <ArrowUpRight size={14} />
+                </span>
+              </a>
+            </motion.div>
+          </motion.div>
         </div>
-        {/* ===================================================
-            BOTTOM ROW: Metadata Left | Role Right
-        ==================================================== */}
-        <div
+
+        {/* BOTTOM ROW: Metadata Left | Role Right */}
+        <motion.div
+          variants={fadeInVariants}
           className="
             relative
             z-20
@@ -408,6 +567,7 @@ export default function Hero() {
               Let's talk
             </a>
           </div>
+
           {/* Bottom Right: Role Signature */}
           <div className="text-right">
             <span
@@ -435,8 +595,8 @@ export default function Hero() {
               Full-Stack Developer.
             </span>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

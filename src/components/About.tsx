@@ -1,3 +1,5 @@
+import { motion, type Variants } from "framer-motion";
+
 const principles = [
   {
     number: "01",
@@ -20,6 +22,56 @@ const principles = [
     text: "A good solution should ultimately make something easier or better for the person using it.",
   },
 ];
+
+const EASE_BRUTAL = [0.16, 1, 0.3, 1] as const;
+
+// Physical sticker snap effect
+const stickerVariants: Variants = {
+  rest: {
+    rotate: -4,
+    x: 0,
+    y: 0,
+    boxShadow: "0px 0px 0px #151515",
+  },
+  hover: {
+    rotate: 0,
+    x: -3,
+    y: -3,
+    boxShadow: "3px 3px 0px #151515",
+    transition: {
+      duration: 0.15,
+      ease: EASE_BRUTAL,
+    },
+  },
+  tap: {
+    rotate: 0,
+    x: 0,
+    y: 0,
+    boxShadow: "0px 0px 0px #151515",
+    transition: {
+      duration: 0.05,
+    },
+  },
+};
+
+// Principles row micro-slide
+const rowVariants: Variants = {
+  rest: { x: 0 },
+  hover: {
+    x: 6,
+    transition: { duration: 0.15, ease: EASE_BRUTAL },
+  },
+};
+
+// Number badge color inversion on row hover
+const numberVariants: Variants = {
+  rest: { color: "var(--color-fg-subtle, #888)", scale: 1 },
+  hover: {
+    color: "var(--color-fg-main, #151515)",
+    scale: 1.05,
+    transition: { duration: 0.1 },
+  },
+};
 
 export default function About() {
   return (
@@ -65,7 +117,11 @@ export default function About() {
 
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="size-2 bg-accent" />
+            <motion.span
+              animate={{ opacity: [1, 0.3, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+              className="size-2 bg-accent"
+            />
 
             <span
               className="
@@ -80,7 +136,6 @@ export default function About() {
               About
             </span>
           </div>
-
         </div>
 
         {/* =====================================================
@@ -181,7 +236,6 @@ export default function About() {
                   sm:gap-6
                 "
               >
-                
                 <p
                   className="
                     max-w-xl
@@ -227,54 +281,60 @@ export default function About() {
                   sm:size-[240px]
                 "
               >
-                {/* Inner ring */}
-                <div
-                  aria-hidden="true"
+                {/* Rotating HUD Crosshair Ring */}
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{
+                    duration: 30,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
                   className="
+                    pointer-events-none
                     absolute
                     inset-3
                     rounded-full
                     border
                     border-border
                   "
-                />
+                >
+                  {/* Crosshairs */}
+                  <span
+                    className="
+                      absolute
+                      left-1/2
+                      top-0
+                      h-full
+                      w-px
+                      -translate-x-1/2
+                      bg-fg-main/20
+                    "
+                  />
+                  <span
+                    className="
+                      absolute
+                      left-0
+                      top-1/2
+                      h-px
+                      w-full
+                      -translate-y-1/2
+                      bg-fg-main/20
+                    "
+                  />
+                </motion.div>
 
-                {/* Top crosshair */}
-                <span
-                  aria-hidden="true"
-                  className="
-                    absolute
-                    left-1/2
-                    top-0
-                    h-3
-                    w-px
-                    -translate-x-1/2
-                    bg-fg-main
-                  "
-                />
-
-                {/* Bottom crosshair */}
-                <span
-                  aria-hidden="true"
-                  className="
-                    absolute
-                    bottom-0
-                    left-1/2
-                    h-3
-                    w-px
-                    -translate-x-1/2
-                    bg-fg-main
-                  "
-                />
-
-                {/* University mark */}
-                <div
+                {/* University sticker mark with physics snap */}
+                <motion.div
+                  variants={stickerVariants}
+                  initial="rest"
+                  whileHover="hover"
+                  whileTap="tap"
                   className="
                     relative
                     z-10
                     flex
                     size-[136px]
-                    rotate-[-4deg]
+                    cursor-pointer
                     items-center
                     justify-center
                     border-2
@@ -293,6 +353,7 @@ export default function About() {
                       uppercase
                       leading-[0.86]
                       tracking-[-0.055em]
+                      text-fg-main
                       sm:text-[21px]
                     "
                   >
@@ -302,7 +363,7 @@ export default function About() {
                     <br />
                     University
                   </span>
-                </div>
+                </motion.div>
 
                 {/* Registration marks */}
                 <span
@@ -380,9 +441,7 @@ export default function About() {
             pt-5
             sm:mt-32
           "
-        >
-        
-        </div>
+        />
 
         {/* =====================================================
             PRINCIPLES
@@ -390,10 +449,14 @@ export default function About() {
 
         <div className="mt-2">
           {principles.map((principle) => (
-            <article
+            <motion.article
               key={principle.number}
+              initial="rest"
+              whileHover="hover"
+              variants={rowVariants}
               className="
                 group
+                relative
                 grid
                 grid-cols-[42px_1fr]
                 gap-4
@@ -408,18 +471,37 @@ export default function About() {
                 lg:grid-cols-[72px_300px_1fr]
               "
             >
-              {/* Number */}
+              {/* Left active pixel block indicator */}
               <span
+                aria-hidden="true"
+                className="
+                  absolute
+                  left-0
+                  top-1/2
+                  h-4
+                  w-1
+                  -translate-y-1/2
+                  bg-accent
+                  opacity-0
+                  transition-opacity
+                  duration-150
+                  group-hover:opacity-100
+                "
+              />
+
+              {/* Number */}
+              <motion.span
+                variants={numberVariants}
                 className="
                   pt-1
                   font-mono
-                  text-[9px]
+                  text-[10px]
+                  font-bold
                   tracking-[0.12em]
-                  text-fg-subtle
                 "
               >
                 {principle.number}
-              </span>
+              </motion.span>
 
               {/* Title */}
               <h3
@@ -430,9 +512,6 @@ export default function About() {
                   uppercase
                   leading-[0.9]
                   tracking-[-0.045em]
-                  transition-transform
-                  duration-200
-                  group-hover:translate-x-1
                   sm:text-2xl
                   lg:text-3xl
                 "
@@ -455,22 +534,7 @@ export default function About() {
               >
                 {principle.text}
               </p>
-
-              {/* Pixel indicator */}
-              <span
-                aria-hidden="true"
-                className="
-                  absolute
-                  left-0
-                  size-1.5
-                  translate-y-1
-                  bg-accent
-                  opacity-0
-                  transition-opacity
-                  group-hover:opacity-100
-                "
-              />
-            </article>
+            </motion.article>
           ))}
         </div>
       </div>

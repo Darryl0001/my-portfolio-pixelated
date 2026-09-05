@@ -1,7 +1,7 @@
-import React from "react";
-import { ArrowUpRight, Mail } from "lucide-react";
+import React, { useState } from "react";
+import { ArrowUpRight, Check, Mail, Loader2 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
-// Custom Lucide-styled SVG icons for Github & Linkedin
 function GithubIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -45,26 +45,53 @@ function LinkedinIcon(props: React.SVGProps<SVGSVGElement>) {
 
 const contactLinks = [
   {
+    id: "email",
     label: "Email",
     value: "darrylmacarandan01@gmail.com",
     href: "mailto:darrylmacarandan01@gmail.com",
     icon: Mail,
+    isCopyable: true,
   },
   {
+    id: "github",
     label: "GitHub",
     value: "github.com/Darryl0001",
     href: "https://github.com/Darryl0001",
     icon: GithubIcon,
+    isCopyable: false,
   },
   {
+    id: "linkedin",
     label: "LinkedIn",
     value: "linkedin.com/darryl-macarandan-90149b32a",
     href: "https://www.linkedin.com/in/darryl-macarandan-90149b32a/",
     icon: LinkedinIcon,
+    isCopyable: false,
   },
 ];
 
 export default function Contact() {
+  const [copied, setCopied] = useState(false);
+  const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
+
+  const handleCopyEmail = (e: React.MouseEvent, href: string, isCopyable: boolean) => {
+    if (!isCopyable) return;
+    e.preventDefault();
+    const email = href.replace("mailto:", "");
+    navigator.clipboard.writeText(email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("submitting");
+    setTimeout(() => {
+      setStatus("success");
+      setTimeout(() => setStatus("idle"), 3500);
+    }, 1500);
+  };
+
   return (
     <section
       id="contact"
@@ -76,7 +103,7 @@ export default function Contact() {
         bg-bg-main
       "
     >
-      {/* Subtle background grid */}
+      {/* Background Grid */}
       <div
         aria-hidden="true"
         className="
@@ -105,19 +132,19 @@ export default function Contact() {
         {/* HEADER */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="size-2 bg-accent" />
-
+            <motion.span
+              animate={{ opacity: [1, 0.3, 1] }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+              className="size-2 bg-accent"
+            />
             <span className="font-mono text-[9px] font-medium uppercase tracking-[0.18em] text-fg-muted">
               Contact
             </span>
           </div>
-
-
         </div>
 
         {/* INTRO */}
         <div className="mt-16 grid grid-cols-1 gap-14 lg:mt-24 lg:grid-cols-12 lg:gap-10">
-          {/* HEADLINE */}
           <div className="lg:col-span-8">
             <h2
               className="
@@ -131,10 +158,8 @@ export default function Contact() {
             >
               LET'S
               <br />
-
               <span className="relative inline-block">
                 BUILD
-
                 <span
                   aria-hidden="true"
                   className="
@@ -148,16 +173,13 @@ export default function Contact() {
                   "
                 />
               </span>
-
               <br />
               SOMETHING.
             </h2>
           </div>
 
-          {/* AVAILABILITY */}
           <div className="flex items-end lg:col-span-4 lg:justify-end">
             <div className="max-w-xs">
-        
               <p
                 className="
                   font-display
@@ -183,13 +205,18 @@ export default function Contact() {
         <div className="mt-20 border-t-2 border-fg-main sm:mt-28">
           {contactLinks.map((link) => {
             const Icon = link.icon;
+            const isEmail = link.isCopyable;
 
             return (
-              <a
+              <motion.a
                 key={link.label}
                 href={link.href}
                 target={link.href.startsWith("http") ? "_blank" : undefined}
                 rel={link.href.startsWith("http") ? "noreferrer" : undefined}
+                onClick={(e) => handleCopyEmail(e, link.href, link.isCopyable)}
+                whileHover={{ x: 6 }}
+                whileTap={{ x: 0 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
                 className="
                   group
                   relative
@@ -210,9 +237,8 @@ export default function Contact() {
                   className="
                     size-4
                     text-fg-muted
-                    transition-transform
-                    duration-200
-                    group-hover:translate-x-0.5
+                    transition-colors
+                    group-hover:text-fg-main
                   "
                   strokeWidth={1.8}
                 />
@@ -241,22 +267,48 @@ export default function Contact() {
                     sm:text-xl
                   "
                 >
-                  {link.value}
+                  {isEmail && copied ? (
+                    <span className="text-accent">COPIED TO CLIPBOARD!</span>
+                  ) : (
+                    link.value
+                  )}
                 </span>
 
-                <ArrowUpRight
-                  className="
-                    size-4
-                    shrink-0
-                    transition-transform
-                    duration-200
-                    group-hover:translate-x-1
-                    group-hover:-translate-y-1
-                  "
-                  strokeWidth={1.8}
-                />
+                <div className="relative flex items-center justify-center">
+                  <AnimatePresence mode="wait">
+                    {isEmail && copied ? (
+                      <motion.div
+                        key="check"
+                        initial={{ scale: 0, rotate: -45 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        exit={{ scale: 0 }}
+                        transition={{ type: "spring", stiffness: 500, damping: 20 }}
+                      >
+                        <Check className="size-4 text-accent" strokeWidth={2.5} />
+                      </motion.div>
+                    ) : (
+                      <motion.div
+                        key="arrow"
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        exit={{ scale: 0 }}
+                      >
+                        <ArrowUpRight
+                          className="
+                            size-4
+                            shrink-0
+                            transition-transform
+                            duration-200
+                            group-hover:translate-x-1
+                            group-hover:-translate-y-1
+                          "
+                          strokeWidth={1.8}
+                        />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
 
-                {/* Pixel hover marker */}
                 <span
                   aria-hidden="true"
                   className="
@@ -271,299 +323,317 @@ export default function Contact() {
                     group-hover:w-10
                   "
                 />
-              </a>
+              </motion.a>
             );
           })}
         </div>
 
         {/* MESSAGE */}
         <div className="mt-20 grid grid-cols-1 gap-10 lg:mt-24 lg:grid-cols-12 lg:gap-10">
-          {/* MESSAGE INTRO */}
           <div className="lg:col-span-4">
-    
-
             <p className="mt-4 max-w-xs text-sm leading-6 text-fg-muted">
               Have something worth building? Tell me what you're working on.
             </p>
           </div>
 
-          {/* FORM */}
-          {/* FORM */}
-<form
-  className="
-    lg:col-span-8
-    lg:border-l
-    lg:border-border
-    lg:pl-10
-  "
->
-  <div className="grid grid-cols-1 gap-7 sm:grid-cols-2">
-    {/* NAME */}
-    <label className="group relative block">
-      <span
-        className="
-          font-mono
-          text-[12px]
-          uppercase
-          tracking-[0.16em]
-          text-fg-subtle
-        "
-      >
-        Name
-      </span>
+          <form
+            onSubmit={handleSubmit}
+            className="
+              lg:col-span-8
+              lg:border-l
+              lg:border-border
+              lg:pl-10
+            "
+          >
+            <div className="grid grid-cols-1 gap-7 sm:grid-cols-2">
+              {/* NAME */}
+              <label className="group relative block">
+                <span
+                  className="
+                    font-mono
+                    text-[12px]
+                    uppercase
+                    tracking-[0.16em]
+                    text-fg-subtle
+                    transition-colors
+                    group-focus-within:text-fg-main
+                  "
+                >
+                  Name
+                </span>
 
-      <div className="relative mt-2">
-        <input
-          type="text"
-          name="name"
-          placeholder="Your name"
-          className="
-            peer
-            h-12
-            w-full
-            border-2
-            border-fg-main
-            bg-bg-elevated
-            px-4
-            font-mono
-            text-xs
-            text-fg-main
-            outline-none
-            shadow-[inset_2px_2px_0px_0px_rgba(0,0,0,0.1)]
-            transition-all
-            placeholder:text-fg-subtle
-            hover:border-accent
-            focus:border-accent
-            focus:shadow-[inset_2px_2px_0px_0px_rgba(0,0,0,0.2),4px_4px_0px_0px_rgba(0,0,0,1)]
-          "
-        />
+                <div className="relative mt-2">
+                  <input
+                    required
+                    type="text"
+                    name="name"
+                    placeholder="Your name"
+                    className="
+                      peer
+                      h-12
+                      w-full
+                      border-2
+                      border-fg-main
+                      bg-bg-elevated
+                      px-4
+                      font-mono
+                      text-xs
+                      text-fg-main
+                      outline-none
+                      shadow-[inset_2px_2px_0px_0px_rgba(0,0,0,0.1)]
+                      transition-all
+                      placeholder:text-fg-subtle
+                      hover:border-accent
+                      focus:border-accent
+                      focus:shadow-[inset_2px_2px_0px_0px_rgba(0,0,0,0.2),4px_4px_0px_0px_rgba(0,0,0,1)]
+                    "
+                  />
 
-        {/* Pixel corner markers on focus */}
-        <span
-          aria-hidden="true"
-          className="
-            pointer-events-none
-            absolute
-            -top-1
-            -left-1
-            size-1.5
-            bg-accent
-            opacity-0
-            transition-opacity
-            peer-focus:opacity-100
-          "
-        />
-        <span
-          aria-hidden="true"
-          className="
-            pointer-events-none
-            absolute
-            -bottom-1
-            -right-1
-            size-1.5
-            bg-accent
-            opacity-0
-            transition-opacity
-            peer-focus:opacity-100
-          "
-        />
-      </div>
-    </label>
+                  <span
+                    aria-hidden="true"
+                    className="
+                      pointer-events-none
+                      absolute
+                      -top-1
+                      -left-1
+                      size-1.5
+                      bg-accent
+                      opacity-0
+                      transition-opacity
+                      peer-focus:opacity-100
+                    "
+                  />
+                  <span
+                    aria-hidden="true"
+                    className="
+                      pointer-events-none
+                      absolute
+                      -bottom-1
+                      -right-1
+                      size-1.5
+                      bg-accent
+                      opacity-0
+                      transition-opacity
+                      peer-focus:opacity-100
+                    "
+                  />
+                </div>
+              </label>
 
-    {/* EMAIL */}
-    <label className="group relative block">
-      <span
-        className="
-          font-mono
-          text-[12px]
-          uppercase
-          tracking-[0.16em]
-          text-fg-subtle
-        "
-      >
-        Email
-      </span>
+              {/* EMAIL */}
+              <label className="group relative block">
+                <span
+                  className="
+                    font-mono
+                    text-[12px]
+                    uppercase
+                    tracking-[0.16em]
+                    text-fg-subtle
+                    transition-colors
+                    group-focus-within:text-fg-main
+                  "
+                >
+                  Email
+                </span>
 
-      <div className="relative mt-2">
-        <input
-          type="email"
-          name="email"
-          placeholder="you@example.com"
-          className="
-            peer
-            h-12
-            w-full
-            border-2
-            border-fg-main
-            bg-bg-elevated
-            px-4
-            font-mono
-            text-xs
-            text-fg-main
-            outline-none
-            shadow-[inset_2px_2px_0px_0px_rgba(0,0,0,0.1)]
-            transition-all
-            placeholder:text-fg-subtle
-            hover:border-accent
-            focus:border-accent
-            focus:shadow-[inset_2px_2px_0px_0px_rgba(0,0,0,0.2),4px_4px_0px_0px_rgba(0,0,0,1)]
-          "
-        />
+                <div className="relative mt-2">
+                  <input
+                    required
+                    type="email"
+                    name="email"
+                    placeholder="you@example.com"
+                    className="
+                      peer
+                      h-12
+                      w-full
+                      border-2
+                      border-fg-main
+                      bg-bg-elevated
+                      px-4
+                      font-mono
+                      text-xs
+                      text-fg-main
+                      outline-none
+                      shadow-[inset_2px_2px_0px_0px_rgba(0,0,0,0.1)]
+                      transition-all
+                      placeholder:text-fg-subtle
+                      hover:border-accent
+                      focus:border-accent
+                      focus:shadow-[inset_2px_2px_0px_0px_rgba(0,0,0,0.2),4px_4px_0px_0px_rgba(0,0,0,1)]
+                    "
+                  />
 
-        {/* Pixel corner markers on focus */}
-        <span
-          aria-hidden="true"
-          className="
-            pointer-events-none
-            absolute
-            -top-1
-            -left-1
-            size-1.5
-            bg-accent
-            opacity-0
-            transition-opacity
-            peer-focus:opacity-100
-          "
-        />
-        <span
-          aria-hidden="true"
-          className="
-            pointer-events-none
-            absolute
-            -bottom-1
-            -right-1
-            size-1.5
-            bg-accent
-            opacity-0
-            transition-opacity
-            peer-focus:opacity-100
-          "
-        />
-      </div>
-    </label>
-  </div>
+                  <span
+                    aria-hidden="true"
+                    className="
+                      pointer-events-none
+                      absolute
+                      -top-1
+                      -left-1
+                      size-1.5
+                      bg-accent
+                      opacity-0
+                      transition-opacity
+                      peer-focus:opacity-100
+                    "
+                  />
+                  <span
+                    aria-hidden="true"
+                    className="
+                      pointer-events-none
+                      absolute
+                      -bottom-1
+                      -right-1
+                      size-1.5
+                      bg-accent
+                      opacity-0
+                      transition-opacity
+                      peer-focus:opacity-100
+                    "
+                  />
+                </div>
+              </label>
+            </div>
 
-  {/* MESSAGE */}
-  <label className="group relative mt-7 block">
-    <span
-      className="
-        font-mono
-        text-[12px]
-        uppercase
-        tracking-[0.16em]
-        text-fg-subtle
-      "
-    >
-      Message
-    </span>
+            {/* MESSAGE */}
+            <label className="group relative mt-7 block">
+              <span
+                className="
+                  font-mono
+                  text-[12px]
+                  uppercase
+                  tracking-[0.16em]
+                  text-fg-subtle
+                  transition-colors
+                  group-focus-within:text-fg-main
+                "
+              >
+                Message
+              </span>
 
-    <div className="relative mt-2">
-      <textarea
-        name="message"
-        rows={5}
-        placeholder="Tell me about the problem you're trying to solve..."
-        className="
-          peer
-          w-full
-          resize-none
-          border-2
-          border-fg-main
-          bg-bg-elevated
-          px-4
-          py-3.5
-          font-mono
-          text-xs
-          leading-6
-          text-fg-main
-          outline-none
-          shadow-[inset_2px_2px_0px_0px_rgba(0,0,0,0.1)]
-          transition-all
-          placeholder:text-fg-subtle
-          hover:border-accent
-          focus:border-accent
-          focus:shadow-[inset_2px_2px_0px_0px_rgba(0,0,0,0.2),4px_4px_0px_0px_rgba(0,0,0,1)]
-        "
-      />
+              <div className="relative mt-2">
+                <textarea
+                  required
+                  name="message"
+                  rows={5}
+                  placeholder="Tell me about the problem you're trying to solve..."
+                  className="
+                    peer
+                    w-full
+                    resize-none
+                    border-2
+                    border-fg-main
+                    bg-bg-elevated
+                    px-4
+                    py-3.5
+                    font-mono
+                    text-xs
+                    leading-6
+                    text-fg-main
+                    outline-none
+                    shadow-[inset_2px_2px_0px_0px_rgba(0,0,0,0.1)]
+                    transition-all
+                    placeholder:text-fg-subtle
+                    hover:border-accent
+                    focus:border-accent
+                    focus:shadow-[inset_2px_2px_0px_0px_rgba(0,0,0,0.2),4px_4px_0px_0px_rgba(0,0,0,1)]
+                  "
+                />
 
-      {/* Pixel corner markers on focus */}
-      <span
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          -top-1
-          -left-1
-          size-1.5
-          bg-accent
-          opacity-0
-          transition-opacity
-          peer-focus:opacity-100
-        "
-      />
-      <span
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          -bottom-1
-          -right-1
-          size-1.5
-          bg-accent
-          opacity-0
-          transition-opacity
-          peer-focus:opacity-100
-        "
-      />
-    </div>
-  </label>
+                <span
+                  aria-hidden="true"
+                  className="
+                    pointer-events-none
+                    absolute
+                    -top-1
+                    -left-1
+                    size-1.5
+                    bg-accent
+                    opacity-0
+                    transition-opacity
+                    peer-focus:opacity-100
+                  "
+                />
+                <span
+                  aria-hidden="true"
+                  className="
+                    pointer-events-none
+                    absolute
+                    -bottom-1
+                    -right-1
+                    size-1.5
+                    bg-accent
+                    opacity-0
+                    transition-opacity
+                    peer-focus:opacity-100
+                  "
+                />
+              </div>
+            </label>
 
-  {/* SUBMIT */}
-  <button
-    type="submit"
-    className="
-      group
-      mt-8
-      inline-flex
-      items-center
-      gap-3
-      border-2
-      border-fg-main
-      bg-fg-main
-      px-5
-      py-3
-      font-mono
-      text-[9px]
-      font-medium
-      uppercase
-      tracking-[0.14em]
-      text-bg-main
-      shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]
-      transition-all
-      hover:-translate-x-0.5
-      hover:-translate-y-0.5
-      hover:shadow-[5px_5px_0px_0px_rgba(0,0,0,1)]
-      active:translate-x-0
-      active:translate-y-0
-      active:shadow-none
-    "
-  >
-    Send message
+            {/* SUBMIT BUTTON */}
+            <motion.button
+              type="submit"
+              disabled={status !== "idle"}
+              whileHover={status === "idle" ? { x: -2, y: -2 } : {}}
+              whileTap={status === "idle" ? { x: 0, y: 0 } : {}}
+              className="
+                group
+                mt-8
+                inline-flex
+                items-center
+                gap-3
+                border-2
+                border-fg-main
+                bg-fg-main
+                px-5
+                py-3
+                font-mono
+                text-[9px]
+                font-medium
+                uppercase
+                tracking-[0.14em]
+                text-bg-main
+                shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]
+                transition-shadow
+                hover:shadow-[5px_5px_0px_0px_rgba(0,0,0,1)]
+                active:shadow-none
+                disabled:cursor-not-allowed
+                disabled:opacity-80
+              "
+            >
+              {status === "submitting" && (
+                <>
+                  <span>SENDING...</span>
+                  <Loader2 className="size-3.5 animate-spin" />
+                </>
+              )}
 
-    <ArrowUpRight
-      className="
-        size-3.5
-        transition-transform
-        duration-200
-        group-hover:translate-x-0.5
-        group-hover:-translate-y-0.5
-      "
-      strokeWidth={2}
-    />
-  </button>
-</form>
+              {status === "success" && (
+                <>
+                  <span>MESSAGE SENT</span>
+                  <Check className="size-3.5 text-accent" strokeWidth={2.5} />
+                </>
+              )}
+
+              {status === "idle" && (
+                <>
+                  <span>Send message</span>
+                  <ArrowUpRight
+                    className="
+                      size-3.5
+                      transition-transform
+                      duration-200
+                      group-hover:translate-x-0.5
+                      group-hover:-translate-y-0.5
+                    "
+                    strokeWidth={2}
+                  />
+                </>
+              )}
+            </motion.button>
+          </form>
         </div>
-
-       
       </div>
     </section>
   );
