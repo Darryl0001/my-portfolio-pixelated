@@ -6,18 +6,18 @@ export default function Hero() {
       id="home"
       className="
         relative
-        h-[calc(100svh-64px)]
         w-full
-        overflow-hidden
+        overflow-visible
         px-6
-        py-3
+        py-10
         sm:px-8
+        sm:py-12
+        lg:h-[calc(100svh-64px)]
+        lg:overflow-hidden
         lg:px-12
+        lg:py-3
       "
     >
-      {/* =====================================================
-          BACKGROUND GRID
-      ====================================================== */}
       <div
         aria-hidden="true"
         className="
@@ -29,7 +29,6 @@ export default function Hero() {
           [background-size:32px_32px]
         "
       />
-
       {/* Left pixel marker */}
       <div
         aria-hidden="true"
@@ -48,14 +47,12 @@ export default function Hero() {
           <span className="size-2 bg-accent" />
           <span className="size-2 bg-fg-main" />
         </div>
-
         <div className="mt-1 flex gap-1">
           <span className="size-2 bg-fg-main" />
           <span className="size-2 bg-fg-main" />
           <span className="size-2 bg-accent" />
         </div>
       </div>
-
       {/* =====================================================
           MAIN SCREEN CONTAINER
       ====================================================== */}
@@ -68,6 +65,8 @@ export default function Hero() {
           max-w-7xl
           flex-col
           justify-between
+          gap-10
+          lg:gap-0
         "
       >
         {/* ===================================================
@@ -111,9 +110,7 @@ export default function Hero() {
               >
                 Hi! I am, Darryl
               </span>
-
               <span className="block">I BUILD</span>
-
               <span className="relative block w-fit">
                 SOFTWARE
                 <span
@@ -129,7 +126,6 @@ export default function Hero() {
                   "
                 />
               </span>
-
               <span className="relative block w-fit">
                 THAT MAKES
                 <span
@@ -145,7 +141,6 @@ export default function Hero() {
                   "
                 />
               </span>
-
               <span className="relative block w-fit">
                 SENSE.
                 <span
@@ -163,10 +158,8 @@ export default function Hero() {
               </span>
             </h1>
           </div>
-
           {/* Spacer for Center Portrait */}
           <div className="hidden lg:col-span-1 lg:block" />
-
           {/* Description (Right) */}
           <div className="lg:col-span-5 lg:pl-6">
             <p
@@ -186,27 +179,39 @@ export default function Hero() {
             </p>
           </div>
         </div>
-
         {/* ===================================================
-            CENTER PORTRAIT & FLOATING CTA (OVERLAY)
+            CENTER PORTRAIT & FLOATING CTA
+            Mobile/Tablet: normal stacked flow (no overlap)
+            Desktop (lg+): absolute overlay, identical to original
         ==================================================== */}
         <div
           className="
-            pointer-events-none
-            absolute
-            inset-0
+            relative
             flex
+            flex-col
             items-center
-            justify-center
+            gap-8
+            py-2
+            lg:pointer-events-none
+            lg:absolute
+            lg:inset-0
+            lg:flex
+            lg:flex-row
+            lg:items-center
+            lg:justify-center
+            lg:gap-0
+            lg:py-0
           "
         >
           {/* Large Center Portrait Card */}
           <div
             className="
-              pointer-events-auto
               relative
               z-10
-              w-[clamp(260px,46vh,370px)]
+              w-[clamp(220px,60vw,320px)]
+              sm:w-[clamp(260px,42vw,340px)]
+              lg:pointer-events-auto
+              lg:w-[clamp(260px,46vh,370px)]
             "
           >
             {/* Lime pixel offset backing */}
@@ -221,7 +226,6 @@ export default function Hero() {
                 [clip-path:polygon(0_8px,8px_8px,8px_0,calc(100%-8px)_0,calc(100%-8px)_8px,100%_8px,100%_calc(100%-8px),calc(100%-8px)_calc(100%-8px),calc(100%-8px)_100%,8px_100%,8px_calc(100%-8px),0_calc(100%-8px))]
               "
             />
-
             {/* Frame Container */}
             <div
               className="
@@ -249,15 +253,10 @@ export default function Hero() {
                   <div className="flex items-center gap-1.5">
                     <span className="size-1.5 bg-accent" />
                     <span className="font-mono text-[8px] font-medium uppercase tracking-[0.14em]">
-                      Player 01
+                      Player
                     </span>
                   </div>
-
-                  <span className="font-mono text-[8px] uppercase tracking-[0.14em] text-fg-muted">
-                    Online
-                  </span>
                 </div>
-
                 {/* Main Photo */}
                 <div className="group relative mt-1 aspect-[4/5] overflow-hidden bg-bg-surface">
                   <img
@@ -273,7 +272,6 @@ export default function Hero() {
                       group-hover:scale-[1.025]
                     "
                   />
-
                   {/* Pixel grid overlay */}
                   <div
                     aria-hidden="true"
@@ -288,7 +286,6 @@ export default function Hero() {
                     "
                   />
                 </div>
-
                 {/* Footer Label */}
                 <div
                   className="
@@ -305,7 +302,6 @@ export default function Hero() {
                     <p className="text-[11px] font-semibold tracking-tight">
                       Darryl Macarandan
                     </p>
-
                     <p
                       className="
                         mt-0.5
@@ -319,31 +315,27 @@ export default function Hero() {
                       Software Developer
                     </p>
                   </div>
-
-                  <span className="font-mono text-[8px] text-fg-muted">
-                    01
-                  </span>
                 </div>
               </div>
             </div>
           </div>
-
-          {/* Floating Right Action Badge */}
+          {/* Primary Action Badge
+              Mobile/Tablet: visible, in flow, centered below portrait
+              Desktop (lg+): floating, absolutely positioned, identical to original */}
           <div
             className="
-              pointer-events-auto
-              absolute
-              right-0
-              top-[62%]
+              relative
               z-20
-              hidden
-              -translate-y-1/2
               border-2
               border-fg-main
               bg-bg-elevated
               p-3.5
               shadow-[4px_4px_0px_#151515]
-              lg:block
+              lg:pointer-events-auto
+              lg:absolute
+              lg:right-0
+              lg:top-[62%]
+              lg:-translate-y-1/2
             "
           >
             <p className="font-mono text-[9px] uppercase tracking-wider text-fg-muted">
@@ -375,7 +367,6 @@ export default function Hero() {
             </a>
           </div>
         </div>
-
         {/* ===================================================
             BOTTOM ROW: Metadata Left | Role Right
         ==================================================== */}
@@ -385,8 +376,10 @@ export default function Hero() {
             z-20
             flex
             shrink-0
+            flex-wrap
             items-end
             justify-between
+            gap-2
             border-t
             border-border/50
             pb-1.5
@@ -395,8 +388,6 @@ export default function Hero() {
         >
           {/* Bottom Left: Counter / Talk Link */}
           <div className="flex items-center gap-4">
-         
-
             <a
               href="#contact"
               className="
@@ -417,7 +408,6 @@ export default function Hero() {
               Let's talk
             </a>
           </div>
-
           {/* Bottom Right: Role Signature */}
           <div className="text-right">
             <span
@@ -432,7 +422,6 @@ export default function Hero() {
             >
               Role
             </span>
-
             <span
               className="
                 font-display
