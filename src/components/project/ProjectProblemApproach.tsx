@@ -20,7 +20,7 @@ const containerVariants: Variants = {
 const itemVariants: Variants = {
   hidden: {
     opacity: 0,
-    y: 14,
+    y: 16,
   },
   visible: {
     opacity: 1,
@@ -69,45 +69,61 @@ export default function ProjectProblemApproach({
         </motion.h2>
 
         {/* Content */}
-        <div className="mt-12 grid gap-14 lg:grid-cols-2 lg:gap-20">
+        <div className="mt-14 grid gap-16 lg:grid-cols-2 lg:gap-20">
           {/* Problem */}
           <motion.article variants={itemVariants}>
-            <div className="border-t border-fg-main pt-5">
+            <div className="border-t border-fg-main pt-6">
+              <div className="flex items-end justify-between gap-6">
+                <span
+                  className="
+                    font-mono
+                    text-sm
+                    font-medium
+                    tracking-[0.08em]
+                    text-fg-muted
+                  "
+                >
+                  01
+                </span>
+
+                <span
+                  className="
+                    font-mono
+                    text-[9px]
+                    font-medium
+                    uppercase
+                    tracking-[0.16em]
+                    text-fg-subtle
+                  "
+                >
+                  Problem
+                </span>
+              </div>
+
               <h3
                 className="
+                  mt-8
+                  max-w-xl
                   font-display
                   text-3xl
                   font-semibold
                   uppercase
-                  leading-[0.95]
+                  leading-[0.94]
                   tracking-[-0.05em]
                   sm:text-4xl
+                  lg:text-5xl
                 "
               >
-                Problem
+                {project.problem.title}
               </h3>
 
               <p
                 className="
                   mt-8
-                  max-w-xl
-                  text-base
-                  leading-7
-                  text-fg-muted
-                  sm:text-lg
-                  sm:leading-8
-                "
-              >
-                {project.problem.title}
-              </p>
-
-              <p
-                className="
-                  mt-5
-                  max-w-xl
+                  max-w-lg
                   text-sm
                   leading-6
-                  text-fg-muted/80
+                  text-fg-muted
                   sm:text-base
                   sm:leading-7
                 "
@@ -119,42 +135,58 @@ export default function ProjectProblemApproach({
 
           {/* Approach */}
           <motion.article variants={itemVariants}>
-            <div className="border-t border-fg-main pt-5">
+            <div className="border-t border-fg-main pt-6">
+              <div className="flex items-end justify-between gap-6">
+                <span
+                  className="
+                    font-mono
+                    text-sm
+                    font-medium
+                    tracking-[0.08em]
+                    text-fg-muted
+                  "
+                >
+                  02
+                </span>
+
+                <span
+                  className="
+                    font-mono
+                    text-[9px]
+                    font-medium
+                    uppercase
+                    tracking-[0.16em]
+                    text-fg-subtle
+                  "
+                >
+                  Approach
+                </span>
+              </div>
+
               <h3
                 className="
+                  mt-8
+                  max-w-xl
                   font-display
                   text-3xl
                   font-semibold
                   uppercase
-                  leading-[0.95]
+                  leading-[0.94]
                   tracking-[-0.05em]
                   sm:text-4xl
+                  lg:text-5xl
                 "
               >
-                Approach
+                {project.solution.title}
               </h3>
 
               <p
                 className="
                   mt-8
-                  max-w-xl
-                  text-base
-                  leading-7
-                  text-fg-muted
-                  sm:text-lg
-                  sm:leading-8
-                "
-              >
-                {project.solution.title}
-              </p>
-
-              <p
-                className="
-                  mt-5
-                  max-w-xl
+                  max-w-lg
                   text-sm
                   leading-6
-                  text-fg-muted/80
+                  text-fg-muted
                   sm:text-base
                   sm:leading-7
                 "
@@ -168,7 +200,3 @@ export default function ProjectProblemApproach({
     </section>
   );
 }
-
-
-
-now can you improve it make it more interesting that just plain text 

@@ -1,80 +1,8 @@
 import { motion, type Variants } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
-const projects = [
-  {
-    number: "01",
-    title: "Project One",
-    type: "Web Application",
-    stack: "React · TypeScript",
-    image: "images/1.png",
-    featured: true,
-  },
-  {
-    number: "02",
-    title: "Project Two",
-    type: "Mobile Application",
-    stack: "React Native · Expo",
-    image: "images/2.png",
-    featured: false,
-  },
-  {
-    number: "03",
-    title: "Project Three",
-    type: "Web Application",
-    stack: "Laravel · MySQL",
-    image: "images/3.png",
-    featured: false,
-  },
-  {
-    number: "04",
-    title: "Project Four",
-    type: "Web Application",
-    stack: "React · Node.js",
-    image: "images/4.png",
-    featured: false,
-  },
-  {
-    number: "05",
-    title: "Project Five",
-    type: "Mobile Application",
-    stack: "React Native · SQLite",
-    image: "images/5.png",
-    featured: true,
-  },
-  {
-    number: "06",
-    title: "Project Six",
-    type: "Web Application",
-    stack: "Flask · MySQL",
-    image: "images/6.png",
-    featured: false,
-  },
-  {
-    number: "07",
-    title: "Project Seven",
-    type: "Web Application",
-    stack: "React · Express",
-    image: "images/7.png",
-    featured: false,
-  },
-  {
-    number: "08",
-    title: "Project Eight",
-    type: "Mobile Application",
-    stack: "React Native · Expo",
-    image: "images/8.png",
-    featured: false,
-  },
-  {
-    number: "09",
-    title: "Project Nine",
-    type: "Web Application",
-    stack: "Laravel · MySQL",
-    image: "images/9.png",
-    featured: true,
-  },
-];
+import { projects, type Project } from "../data/projects";
 
 const EASE_BRUTAL = [0.16, 1, 0.3, 1] as const;
 
@@ -143,140 +71,188 @@ function ProjectCard({
   project,
   large = false,
 }: {
-  project: (typeof projects)[number];
+  project: Project;
   large?: boolean;
 }) {
   return (
-    <motion.a
-      href="#"
+    <motion.div
       variants={cardVariants}
       initial="rest"
       whileHover="hover"
       whileTap="tap"
-      className={`
-        group
-        relative
-        block
-        ${large ? "lg:col-span-2" : ""}
-      `}
+      className={large ? "lg:col-span-2" : ""}
     >
-      <div className="relative overflow-hidden border-2 border-fg-main bg-fg-main">
-        <div
-          aria-hidden="true"
-          className="
-            absolute inset-0
-            translate-x-2 translate-y-2
-            bg-accent
-            transition-transform duration-200
-            group-hover:translate-x-3
-            group-hover:translate-y-3
-          "
-        />
-
-        <div className="relative aspect-[16/10] overflow-hidden bg-bg-surface">
-          <motion.img
-            variants={imageVariants}
-            src={project.image}
-            alt={project.title}
-            className="h-full w-full object-cover"
-          />
-
+      <Link
+        to={`/projects/${project.slug}`}
+        className="group relative block"
+      >
+        <div className="relative overflow-hidden border-2 border-fg-main bg-fg-main">
+          {/* Pixel offset */}
           <div
+            aria-hidden="true"
             className="
-              pointer-events-none
               absolute inset-0
-              bg-fg-main/0
-              transition-colors duration-200
-              group-hover:bg-fg-main/5
+              translate-x-2 translate-y-2
+              bg-accent
+              transition-transform duration-200
+              group-hover:translate-x-3
+              group-hover:translate-y-3
             "
           />
 
-          <span
-            className="
-              absolute left-3 top-3
-              border border-fg-main
-              bg-bg-main
-              px-2 py-1
-              font-mono
-              text-[9px]
-              font-medium
-              tracking-[0.12em]
-            "
-          >
-            {project.number}
-          </span>
-
-          <motion.span
-            variants={arrowVariants}
-            className="
-              absolute right-3 top-3
-              flex size-8
-              items-center justify-center
-              border border-fg-main
-              bg-bg-main
-            "
-          >
-            <ArrowUpRight
-              size={15}
-              strokeWidth={2}
+          {/* Image */}
+          <div className="relative aspect-[16/10] overflow-hidden bg-bg-surface">
+            <motion.img
+              variants={imageVariants}
+              src={project.thumbnail}
+              alt={`${project.title} project preview`}
+              className="h-full w-full object-cover"
             />
-          </motion.span>
-        </div>
 
-        <div
-          className="
-            relative
-            flex items-end justify-between
-            gap-4
-            border-t-2 border-fg-main
-            bg-bg-main
-            px-3 py-3
-            sm:px-4 sm:py-3.5
-          "
-        >
-          <div className="min-w-0">
-            <h3
+            {/* Project number */}
+            <span
               className="
-                font-display
-                text-base
-                font-bold
-                tracking-[-0.025em]
-                sm:text-lg
-              "
-            >
-              {project.title}
-            </h3>
-
-            <p
-              className="
-                mt-0.5
+                absolute left-3 top-3
+                border border-fg-main
+                bg-bg-main
+                px-2.5 py-1.5
                 font-mono
-                text-[8px]
-                uppercase
-                tracking-[0.1em]
-                text-fg-muted
-                sm:text-[9px]
+                text-[9px]
+                font-medium
+                tracking-[0.12em]
               "
             >
-              {project.type}
-            </p>
+              {project.number}
+            </span>
+
+            {/* Open project */}
+            <motion.span
+              variants={arrowVariants}
+              className="
+                absolute right-3 top-3
+                flex size-9
+                items-center justify-center
+                border border-fg-main
+                bg-bg-main
+              "
+            >
+              <ArrowUpRight size={16} />
+            </motion.span>
           </div>
 
-          <span
+          {/* Project information */}
+          <div
             className="
-              shrink-0
-              font-mono
-              text-[8px]
-              uppercase
-              tracking-[0.08em]
-              text-fg-muted
+              relative
+              border-t-2 border-fg-main
+              bg-bg-main
+              px-4 py-4
+              sm:px-5 sm:py-5
             "
           >
-            {project.stack}
-          </span>
+            <div className="flex items-start justify-between gap-5">
+              <div>
+                <h3
+                  className="
+                    font-display
+                    text-xl
+                    font-bold
+                    uppercase
+                    leading-none
+                    tracking-[-0.045em]
+                    sm:text-2xl
+                  "
+                >
+                  {project.title}
+                </h3>
+
+                <div className="mt-2 flex items-center gap-2">
+                  <span className="size-1.5 bg-accent" />
+
+                  <p
+                    className="
+                      font-mono
+                      text-[9px]
+                      font-medium
+                      uppercase
+                      tracking-[0.14em]
+                      text-fg-muted
+                    "
+                  >
+                    {project.type}
+                  </p>
+                </div>
+              </div>
+
+              <span
+                className="
+                  shrink-0
+                  font-mono
+                  text-[8px]
+                  uppercase
+                  tracking-[0.14em]
+                  text-fg-subtle
+                "
+              >
+                {project.number} / {String(projects.length).padStart(2, "0")}
+              </span>
+            </div>
+
+            {/* Tech stack */}
+            <div
+              className="
+                mt-5
+                flex
+                flex-wrap
+                gap-x-3
+                gap-y-2
+                border-t
+                border-border
+                pt-3
+              "
+            >
+              <span
+                className="
+                  mr-1
+                  font-mono
+                  text-[8px]
+                  uppercase
+                  tracking-[0.16em]
+                  text-fg-subtle
+                "
+              >
+                Built with
+              </span>
+
+              {project.stack.map((tech, index) => (
+                <span
+                  key={tech}
+                  className="
+                    inline-flex
+                    items-center
+                    gap-2
+                    font-mono
+                    text-[9px]
+                    font-medium
+                    uppercase
+                    tracking-[0.1em]
+                  "
+                >
+                  {index > 0 && (
+                    <span
+                      aria-hidden="true"
+                      className="size-1.5 bg-accent"
+                    />
+                  )}
+
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
-    </motion.a>
+      </Link>
+    </motion.div>
   );
 }
 
@@ -298,6 +274,7 @@ export default function Projects() {
       "
     >
       <div className="mx-auto max-w-7xl">
+        {/* Section heading */}
         <div className="mb-10 flex items-end justify-between sm:mb-12">
           <div>
             <span
@@ -338,10 +315,11 @@ export default function Projects() {
               text-fg-subtle
             "
           >
-            09 projects
+            {String(projects.length).padStart(2, "0")} projects
           </span>
         </div>
 
+        {/* Project grid */}
         <div
           className="
             grid
@@ -351,44 +329,13 @@ export default function Projects() {
             lg:gap-6
           "
         >
-          <ProjectCard
-            project={projects[0]}
-            large
-          />
-
-          <ProjectCard
-            project={projects[1]}
-          />
-
-          <ProjectCard
-            project={projects[2]}
-          />
-
-          <ProjectCard
-            project={projects[3]}
-          />
-
-          <ProjectCard
-            project={projects[4]}
-            large
-          />
-
-          <ProjectCard
-            project={projects[5]}
-          />
-
-          <ProjectCard
-            project={projects[6]}
-          />
-
-          <ProjectCard
-            project={projects[7]}
-          />
-
-          <ProjectCard
-            project={projects[8]}
-            large
-          />
+          {projects.map((project, index) => (
+            <ProjectCard
+              key={project.slug}
+              project={project}
+              large={index === 0 || index === 4 || index === 8}
+            />
+          ))}
         </div>
       </div>
     </section>
