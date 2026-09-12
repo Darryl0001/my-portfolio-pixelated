@@ -1,4 +1,4 @@
-import { motion, type Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import {
   SiFastapi,
@@ -15,8 +15,6 @@ type CMUOneHeroProps = {
   project: Project;
 };
 
-const EASE_BRUTAL = [0.16, 1, 0.3, 1] as const;
-
 const stackIcons = [
   { name: "React", icon: SiReact, color: "#61DAFB" },
   { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
@@ -25,47 +23,7 @@ const stackIcons = [
   { name: "Leaflet", icon: SiLeaflet, color: "#199900" },
 ];
 
-const blockVariants: Variants = {
-  rest: {
-    x: 0,
-    y: 0,
-    boxShadow: "0px 0px 0px #151515",
-    zIndex: 1,
-  },
-  hover: {
-    x: -3,
-    y: -3,
-    boxShadow: "4px 4px 0px #151515",
-    zIndex: 10,
-    transition: {
-      duration: 0.15,
-      ease: EASE_BRUTAL,
-    },
-  },
-  tap: {
-    x: 0,
-    y: 0,
-    boxShadow: "0px 0px 0px #151515",
-    transition: {
-      duration: 0.08,
-    },
-  },
-};
-
-const iconVariants: Variants = {
-  rest: {
-    scale: 1,
-    y: 0,
-  },
-  hover: {
-    scale: 1.1,
-    y: -2,
-    transition: {
-      duration: 0.15,
-      ease: EASE_BRUTAL,
-    },
-  },
-};
+const EASE = [0.16, 1, 0.3, 1];
 
 export default function CMUOneHero({ project }: CMUOneHeroProps) {
   return (
@@ -75,9 +33,9 @@ export default function CMUOneHero({ project }: CMUOneHeroProps) {
       <div className="relative mx-auto max-w-7xl px-6 pb-16 pt-6 sm:px-8 sm:pb-20 sm:pt-8 lg:px-12 lg:pb-24">
         {/* Back navigation */}
         <motion.div
-          initial={{ opacity: 0, y: -8 }}
+          initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, ease: EASE_BRUTAL }}
+          transition={{ duration: 0.4, ease: EASE }}
         >
           <Link
             to="/#projects"
@@ -94,26 +52,18 @@ export default function CMUOneHero({ project }: CMUOneHeroProps) {
         {/* Project introduction */}
         <div className="mt-16 sm:mt-20 lg:mt-24">
           <motion.h1
-            initial={{ opacity: 0, y: 28 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.5,
-              delay: 0.05,
-              ease: EASE_BRUTAL,
-            }}
+            transition={{ duration: 0.5, delay: 0.1, ease: EASE }}
             className="max-w-6xl font-display text-[clamp(4.5rem,11vw,10rem)] font-bold uppercase leading-[0.78] tracking-[-0.075em]"
           >
             {project.title}
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 18 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.4,
-              delay: 0.12,
-              ease: EASE_BRUTAL,
-            }}
+            transition={{ duration: 0.5, delay: 0.2, ease: EASE }}
             className="mt-8 max-w-2xl text-lg leading-8 text-fg-muted sm:text-xl sm:leading-9"
           >
             {project.description}
@@ -122,99 +72,121 @@ export default function CMUOneHero({ project }: CMUOneHeroProps) {
 
         {/* Main project image */}
         <motion.div
-        initial={{ opacity: 0, y: 36 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-            duration: 0.65,
-            delay: 0.18,
-            ease: EASE_BRUTAL,
-        }}
-        className="group relative mt-14 sm:mt-16 lg:mt-20"
+          initial={{ opacity: 0, y: 28 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
+          className="group relative mt-14 sm:mt-16 lg:mt-20"
         >
-        {/* Hover-only mechanical offset */}
-        <div
+          {/* Mechanical offset */}
+          <motion.div
             aria-hidden="true"
+            initial={{ opacity: 0, x: 0, y: 0 }}
+            animate={{ opacity: 1, x: 8, y: 8 }}
+            transition={{ duration: 0.4, delay: 0.45, ease: EASE }}
             className="
-            absolute inset-0
-            bg-fg-main
-            translate-x-0 translate-y-0
-            transition-transform duration-200 ease-out
-            group-hover:translate-x-2 group-hover:translate-y-2
+              absolute inset-0
+              bg-fg-main
+              transition-transform duration-150 ease-out
+              group-hover:translate-x-3 group-hover:translate-y-3
             "
-        />
+          />
 
-        <div
+          <div
             className="
-            relative overflow-hidden
-            border-2 border-fg-main
-            bg-bg-surface
-            transition-transform duration-200 ease-out
-            group-hover:-translate-x-1 group-hover:-translate-y-1
+              relative overflow-hidden
+              border-2 border-fg-main
+              bg-bg-surface
+              transition-transform duration-150 ease-out
+              group-hover:-translate-x-1 group-hover:-translate-y-1
             "
-        >
+          >
             <img
-            src={project.thumbnail}
-            alt={`${project.title} project preview`}
-            className="
-                h-auto w-full object-cover
-                transition-transform duration-500 ease-out
-                group-hover:scale-[1.01]
-            "
+              src={project.thumbnail}
+              alt={`${project.title} project preview`}
+              decoding="async"
+              className="block h-auto w-full object-cover"
             />
 
             {project.live && (
-            <a
+              <a
                 href={project.live}
                 target="_blank"
                 rel="noreferrer"
                 aria-label={`Open ${project.title}`}
                 className="
-                absolute right-4 top-4
-                flex size-12 items-center justify-center
-                border-2 border-fg-main
-                bg-bg-main
-                transition-transform duration-150
-                hover:-translate-y-1 hover:translate-x-1
+                  absolute right-4 top-4
+                  flex size-12 items-center justify-center
+                  border-2 border-fg-main
+                  bg-bg-main
+                  transition-transform duration-150
+                  hover:-translate-y-1 hover:translate-x-1
                 "
-            >
+              >
                 <ArrowUpRight size={20} />
-            </a>
+              </a>
             )}
-        </div>
+          </div>
         </motion.div>
 
         {/* Technology signature */}
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.4,
-            delay: 0.32,
-            ease: EASE_BRUTAL,
-          }}
-          className="mt-10 border-t border-border pt-6 sm:mt-12"
-        >
-          <p className="font-mono text-sm font-medium uppercase tracking-[0.12em] text-fg-muted">
+        <div className="mt-10 border-t border-border pt-6 sm:mt-12">
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4, delay: 0.4 }}
+            className="font-mono text-sm font-medium uppercase tracking-[0.12em] text-fg-muted"
+          >
             Built with
-          </p>
+          </motion.p>
 
-          <div className="mt-4 flex flex-wrap gap-2 sm:gap-3">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.04,
+                  delayChildren: 0.45,
+                },
+              },
+            }}
+            className="mt-4 flex flex-wrap gap-2 sm:gap-3"
+          >
             {stackIcons.map(({ name, icon: Icon, color }) => (
               <motion.div
                 key={name}
-                variants={blockVariants}
-                initial="rest"
-                whileHover="hover"
-                whileTap="tap"
-                className="group relative flex h-14 items-center gap-3 border border-border bg-bg-main px-4 transition-colors hover:border-fg-main hover:bg-bg-elevated sm:h-16 sm:px-5"
+                variants={{
+                  hidden: { opacity: 0, y: 12 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                transition={{ duration: 0.3, ease: EASE }}
+                className="
+                  group relative flex h-14 items-center gap-3
+                  border border-border
+                  bg-bg-main px-4
+                  transition-[transform,box-shadow,border-color,background-color]
+                  duration-100 ease-out
+                  hover:-translate-x-[3px]
+                  hover:-translate-y-[3px]
+                  hover:border-fg-main
+                  hover:bg-bg-elevated
+                  hover:shadow-[4px_4px_0_var(--color-fg-main)]
+                  sm:h-16 sm:px-5
+                "
               >
-                <motion.div variants={iconVariants}>
-                  <Icon
-                    size={24}
-                    color={color}
-                    aria-hidden="true"
-                  />
-                </motion.div>
+                <div
+                  className="
+                    transition-transform
+                    duration-100
+                    group-hover:-translate-y-0.5
+                    group-hover:rotate-[-3deg]
+                    group-hover:scale-110
+                  "
+                >
+                  <Icon size={24} color={color} aria-hidden="true" />
+                </div>
 
                 <span className="font-display text-sm font-semibold tracking-[-0.02em] sm:text-base">
                   {name}
@@ -222,12 +194,18 @@ export default function CMUOneHero({ project }: CMUOneHeroProps) {
 
                 <span
                   aria-hidden
-                  className="absolute bottom-0 left-0 size-1.5 bg-accent opacity-0 transition-opacity group-hover:opacity-100"
+                  className="
+                    absolute bottom-0 left-0 size-1.5
+                    bg-accent opacity-0
+                    transition-opacity
+                    duration-100
+                    group-hover:opacity-100
+                  "
                 />
               </motion.div>
             ))}
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

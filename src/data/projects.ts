@@ -35,12 +35,12 @@ export const projects: Project[] = [
     type: "AI - RAG",
     stack: ["FastAPI", "TypeScript", "React", "SQLite", "Ollama"],
 
-    thumbnail: "/images/cmu1/thumbnail.png",
+    thumbnail: "/images/cmu1/thumbnail.webp",
 
     images: [
-      "/images/cmu1/01.png",
-      "/images/cmu1/02.png",
-      "/images/cmu1/03.png",
+      "/images/cmu1/01.webp",
+      "/images/cmu1/02.webp",
+      "/images/cmu1/03.webp",
     ],
 
     description:

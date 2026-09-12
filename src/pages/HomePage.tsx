@@ -6,6 +6,7 @@ import Technologies from "../components/Technologies";
 import Projects from "../components/Projects";
 import About from "../components/About";
 import Contact from "../components/Contact";
+import CMUOneProblem from "../features/cmu-one/CMUOneProblem";
 
 export default function HomePage() {
   return (

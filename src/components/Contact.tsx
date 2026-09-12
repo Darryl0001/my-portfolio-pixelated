@@ -151,7 +151,7 @@ export default function Contact() {
                 font-display
                 text-[clamp(4rem,9vw,9rem)]
                 font-bold
-                uppercase
+                
                 leading-[0.78]
                 tracking-[-0.085em]
               "
