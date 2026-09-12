@@ -1,24 +1,14 @@
-import { Navigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-import { projects } from "../data/projects";
-import ProjectHero from "../components/project/ProjectHero";
-import ProjectOverview from "../components/project/ProjectOverview";
-import ProjectProblemApproach from "../components/project/ProjectProblemApproach";
+import CMUOnePage from "./projects/CMUOnePage";
+import GenericProjectPage from "./projects/GenericProjectPage";
 
 export default function ProjectPage() {
   const { slug } = useParams();
 
-  const project = projects.find((item) => item.slug === slug);
-
-  if (!project) {
-    return <Navigate to="/#projects" replace />;
+  if (slug === "cmu-one") {
+    return <CMUOnePage />;
   }
 
-  return (
-    <main>
-      <ProjectHero project={project} />
-      <ProjectOverview project={project} />
-      <ProjectProblemApproach project={project} />
-    </main>
-  );
+  return <GenericProjectPage slug={slug} />;
 }
