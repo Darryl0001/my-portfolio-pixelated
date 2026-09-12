@@ -13,7 +13,7 @@ const moments = [
     description:
       "Ask questions in plain language instead of figuring out which office, document, or page contains the information you need.",
     imageIndex: 0,
-    align: "left",
+    align: "leftss",
   },
   {
     number: "02",
