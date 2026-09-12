@@ -5,53 +5,34 @@ import {
   Globe,
   Layers3,
   Search,
+  ShoppingBag,
+  type LucideIcon,
 } from "lucide-react";
 
-const layers = [
-  {
-    number: "01",
-    title: "CMU ONE",
-    icon: Globe,
-    color: "#38BDF8",
-    items: ["Interface", "Sources", "Map"],
-  },
-  {
-    number: "02",
-    title: "FASTAPI",
-    icon: Layers3,
-    color: "#10B981",
-    items: ["API", "Auth", "RAG"],
-  },
-  {
-    number: "03",
-    title: "RETRIEVAL",
-    icon: Search,
-    color: "#F59E0B",
-    items: ["Embeddings", "Search", "Context"],
-  },
-  {
-    number: "04",
-    title: "DATA",
-    icon: Database,
-    color: "#8B5CF6",
-    items: ["Policies", "Offices", "Locations"],
-  },
-  {
-    number: "05",
-    title: "LLM",
-    icon: Bot,
-    color: "#F43F5E",
-    items: ["Context", "Response"],
-  },
-];
+import type { Project } from "../../data/projects";
 
-const EASE = [0.16, 1, 0.3, 1];
+type ProjectSystemProps = {
+  project: Project;
+};
 
-export function CMUOneSystem() {
+const ICONS: Record<string, LucideIcon> = {
+  globe: Globe,
+  layers: Layers3,
+  search: Search,
+  database: Database,
+  bot: Bot,
+  "shopping-bag": ShoppingBag,
+};
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+export default function ProjectSystem({
+  project,
+}: ProjectSystemProps) {
+  const { system } = project;
+
   return (
-    <section className="border-b border-border bg-bg-main overflow-hidden">
+    <section className="overflow-hidden border-b border-border bg-bg-main">
       <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28 lg:px-12 lg:py-36">
-        {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -59,13 +40,16 @@ export function CMUOneSystem() {
           transition={{ duration: 0.5, ease: EASE }}
         >
           <h2 className="max-w-4xl font-display text-4xl font-semibold leading-[0.92] tracking-[-0.05em] sm:text-6xl md:text-7xl lg:text-[6rem]">
-            The system behind
-            <br />
-            the assistant.
+            {system.title}
           </h2>
+
+          {system.description && (
+            <p className="mt-6 max-w-2xl text-[15px] leading-7 text-fg-muted sm:text-base">
+              {system.description}
+            </p>
+          )}
         </motion.div>
 
-        {/* Architecture Grid */}
         <div className="mt-14 sm:mt-20 lg:mt-28">
           <div
             className="
@@ -79,10 +63,13 @@ export function CMUOneSystem() {
               lg:grid-cols-3
             "
           >
-            {layers.map(
-              ({ number, title, icon: Icon, color, items }, index) => (
+            {system.items.map((item, index) => {
+              const Icon = item.icon ? ICONS[item.icon] : null;
+              const number = String(index + 1).padStart(2, "0");
+
+              return (
                 <motion.div
-                  key={number}
+                  key={item.title}
                   initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
@@ -118,7 +105,6 @@ export function CMUOneSystem() {
                     lg:py-8
                   "
                 >
-                  {/* Pixel index */}
                   <span
                     className="
                       absolute
@@ -135,33 +121,32 @@ export function CMUOneSystem() {
                     {number}
                   </span>
 
-                  {/* Icon */}
-                  <div
-                    className="
-                      flex
-                      size-11
-                      shrink-0
-                      items-center
-                      justify-center
-                      border
-                      border-border
-                      bg-bg-main
-                      transition-all
-                      duration-100
-                      group-hover:-translate-y-0.5
-                      group-hover:rotate-[-3deg]
-                      group-hover:scale-105
-                      group-hover:border-fg-main
-                    "
-                  >
-                    <Icon
-                      size={23}
-                      strokeWidth={1.7}
-                      color={color}
-                    />
-                  </div>
+                  {Icon && (
+                    <div
+                      className="
+                        flex
+                        size-11
+                        shrink-0
+                        items-center
+                        justify-center
+                        border
+                        border-border
+                        bg-bg-main
+                        transition-all
+                        duration-100
+                        group-hover:-translate-y-0.5
+                        group-hover:rotate-[-3deg]
+                        group-hover:scale-105
+                        group-hover:border-fg-main
+                      "
+                    >
+                      <Icon
+                        size={23}
+                        strokeWidth={1.7}
+                      />
+                    </div>
+                  )}
 
-                  {/* Title */}
                   <h3
                     className="
                       mt-8
@@ -179,14 +164,13 @@ export function CMUOneSystem() {
                       lg:text-[2.6rem]
                     "
                   >
-                    {title}
+                    {item.title}
                   </h3>
 
-                  {/* Items */}
                   <div className="mt-auto flex flex-wrap gap-x-5 gap-y-2 pt-8">
-                    {items.map((item) => (
+                    {item.items.map((value) => (
                       <span
-                        key={item}
+                        key={value}
                         className="
                           flex
                           items-center
@@ -203,18 +187,18 @@ export function CMUOneSystem() {
                           className="
                             size-1.5
                             shrink-0
+                            bg-fg-muted
                             transition-transform
                             duration-100
                             group-hover:scale-125
                           "
                         />
 
-                        {item}
+                        {value}
                       </span>
                     ))}
                   </div>
 
-                  {/* Pixel corner accent */}
                   <span
                     aria-hidden="true"
                     className="
@@ -230,8 +214,8 @@ export function CMUOneSystem() {
                     "
                   />
                 </motion.div>
-              ),
-            )}
+              );
+            })}
           </div>
         </div>
       </div>

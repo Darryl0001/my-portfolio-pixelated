@@ -2,11 +2,11 @@ import { Navigate } from "react-router-dom";
 
 import MainLayout from "../../layouts/MainLayout";
 import { projects } from "../../data/projects";
-import CMUOneHero from "../../features/cmu-one/CMUOneHero";
 import CMUOneProblem from "../../features/cmu-one/CMUOneProblem";
 import { CMUOneProduct } from "../../features/cmu-one/CMUOneProduct";
-import { CMUOneSystem } from "../../features/cmu-one/CMUOneSystem";
-import { CMUOneLessons } from "../../features/cmu-one/CMUOneLessons";
+import ProjectLessons from "../../components/projects/ProjectLessons";
+import ProjectHero from "../../components/projects/ProjectHero";
+import ProjectSystem from "../../components/projects/ProjectSystem";
 
 export default function CMUOnePage() {
   const project = projects.find((item) => item.slug === "cmu-one");
@@ -17,11 +17,11 @@ export default function CMUOnePage() {
 
   return (
     <MainLayout>
-      <CMUOneHero project={project} />
+      <ProjectHero project={project} />
       <CMUOneProblem />
       <CMUOneProduct project={project} />
-      <CMUOneSystem />
-      <CMUOneLessons />
+      <ProjectSystem project={project} />
+      <ProjectLessons project={project} />
     </MainLayout>
   );
 }

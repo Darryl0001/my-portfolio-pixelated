@@ -1,3 +1,23 @@
+export type ProjectSystem = {
+  title: string;
+  description?: string;
+  items: {
+    title: string;
+    icon?: string;
+    items: string[];
+  }[];
+};
+
+export type ProjectLessons = {
+  title: string;
+  description: string;
+  items: {
+    title: string;
+    description: string;
+  }[];
+  closing?: string;
+};
+
 export type Project = {
   slug: string;
   number: string;
@@ -23,6 +43,10 @@ export type Project = {
 
   features: string[];
 
+  system: ProjectSystem;
+
+  lessons: ProjectLessons;
+
   github?: string;
   live?: string;
 };
@@ -33,7 +57,7 @@ export const projects: Project[] = [
     number: "01",
     title: "CMU One",
     type: "AI - RAG",
-    stack: ["FastAPI", "TypeScript", "React", "SQLite", "Ollama"],
+    stack: ["FastAPI", "TypeScript", "React" , "SQLite", "Ollama"],
 
     thumbnail: "/images/cmu1/thumbnail.webp",
 
@@ -72,91 +96,223 @@ export const projects: Project[] = [
       "Chat history",
     ],
 
-    github: "https://github.com/example/cmu-one",
-    live: "https://example.com",
+    system: {
+      title: "The system behind the assistant.",
+
+      description:
+        "Each layer has a specific responsibility, from receiving a student's question to producing a grounded response.",
+
+      items: [
+        {
+          title: "CMU ONE",
+          icon: "globe",
+          items: ["Interface", "Sources", "Map"],
+        },
+        {
+          title: "FASTAPI",
+          icon: "layers",
+          items: ["API", "Auth", "RAG"],
+        },
+        {
+          title: "RETRIEVAL",
+          icon: "search",
+          items: ["Embeddings", "Search", "Context"],
+        },
+        {
+          title: "DATA",
+          icon: "database",
+          items: ["Policies", "Offices", "Locations"],
+        },
+        {
+          title: "LLM",
+          icon: "bot",
+          items: ["Context", "Response"],
+        },
+      ],
+    },
+
+    lessons: {
+      title: "My Learnings and decisions",
+
+      description:
+        "Building CMU One was less about making the AI work and more about deciding how the system should work around the actual problem.",
+
+      items: [
+        {
+          title: "The data model shapes the product",
+          description:
+            "The assistant is only as useful as the information behind it. Structuring, categorizing, and verifying university information became just as important as the AI itself.",
+        },
+        {
+          title: "Keep the AI behind a controlled system",
+          description:
+            "We chose RAG instead of letting the model answer freely. The goal was not to make it sound intelligent at all costs, but to keep answers grounded in information we actually have.",
+        },
+        {
+          title: "Separate information from location",
+          description:
+            "Location data was kept connected to knowledge entries instead of being mixed into the AI's context. This kept the retrieval system cleaner while allowing the same information to power the campus map.",
+        },
+        {
+          title: "Build around the actual problem",
+          description:
+            "We kept the architecture small for the first version: FastAPI, SQLite, vector search, and a simple admin flow. There was no need to introduce a larger stack before the product needed it.",
+        },
+        {
+          title: "Features should work as one system",
+          description:
+            "The map became more useful when it was connected to the assistant. If an answer tells a student where something is, the next useful step is helping them find it.",
+        },
+        {
+          title: "V1 should stay focused",
+          description:
+            "A university assistant could eventually do much more, but adding everything early would make the system harder to maintain and trust. The first version focuses on finding information, understanding it, and acting on it.",
+        },
+      ],
+
+      closing:
+        "CMU One is still a work in progress. There is more to improve, but the direction is clear.",
+    },
+
+    // Remove these until you have the real URLs.
+    // github: "...",
+    // live: "...",
   },
 
+
+
+
   {
-    slug: "project-two",
+    slug: "nook",
     number: "02",
-    title: "Project Two",
-    type: "Mobile Application",
-    stack: ["React Native", "Expo", "SQLite"],
+    title: "Nook",
+    type: "Marketplace",
+    stack: ["React", "TypeScript", "Laravel", "MySQL"],
 
-    thumbnail: "/images/2.png",
+    thumbnail: "/images/nook/thumbnail.webp",
 
     images: [
-      "/images/project-two/01.png",
-      "/images/project-two/02.png",
+      "/images/nook/01.webp",
+      "/images/nook/02.webp",
+      "/images/nook/03.webp",
+      "/images/nook/04.webp",
+      "/images/nook/05.webp",
+      "/images/nook/06.webp",
     ],
 
     description:
-      "A mobile application built around a simple workflow for managing everyday tasks.",
+      "A second-hand marketplace where users can discover, list, and buy pre-owned items in one place.",
 
     overview:
-      "Project Two explores how a focused mobile interface can make a repetitive workflow faster and easier to manage.",
+      "Nook is a marketplace built around the idea of making second-hand buying and selling simpler. Users can browse listings, save items, manage their own products, purchase items, track orders, and review sellers through a single platform.",
 
     problem: {
-      title: "Too many steps for simple tasks.",
+      title: "Selling used items shouldn't feel complicated.",
       content:
-        "The existing workflow required users to move between different screens and manually keep track of information.",
+        "Second-hand transactions often happen across scattered posts, messages, and informal channels. Buyers have to search through listings manually, while sellers need to manage product details, inquiries, and transactions without a dedicated system.",
     },
 
     solution: {
-      title: "Keep the workflow focused.",
+      title: "A marketplace for both sides of the transaction.",
       content:
-        "The application brings the most important actions into a single mobile experience while keeping the interface lightweight and easy to understand.",
+        "Nook brings listings, shopping, checkout, orders, favorites, profiles, and seller reviews into one system. Users can switch between buying and selling without needing separate platforms or workflows.",
     },
 
     features: [
-      "Mobile-first interface",
-      "Offline data storage",
-      "Task management",
-      "Search and filtering",
+      "User authentication",
+      "Marketplace browsing",
+      "Product listings",
+      "Listing image uploads",
+      "Categories",
+      "Favorites",
+      "Checkout",
+      "Order management",
+      "Order tracking",
+      "Addresses",
+      "Seller profiles",
+      "Seller reviews",
     ],
 
-    github: "https://github.com/example/project-two",
-  },
+    system: {
+      title: "The system behind the marketplace.",
 
-  {
-    slug: "project-three",
-    number: "03",
-    title: "Project Three",
-    type: "Web Application",
-    stack: ["Laravel", "MySQL", "Tailwind CSS"],
+      description:
+        "Nook connects listings, users, checkout, and orders into one marketplace flow, with Laravel handling the business logic and MySQL storing the platform data.",
 
-    thumbnail: "/images/3.png",
-
-    images: [
-      "/images/project-three/01.png",
-      "/images/project-three/02.png",
-    ],
-
-    description:
-      "A web application focused on organizing information and simplifying an administrative workflow.",
-
-    overview:
-      "Project Three was built to replace a manual process with a centralized web-based system.",
-
-    problem: {
-      title: "Manual processes become difaficult to manage.",
-      content:
-        "Information was previously handled across separate files and manual processes, making it difficult to keep everything organized.",
+      items: [
+        {
+          title: "NOOK",
+          icon: "globe",
+          items: ["Marketplace", "Listings", "Profiles"],
+        },
+        {
+          title: "LARAVEL",
+          icon: "layers",
+          items: ["API", "Auth", "Business Logic"],
+        },
+        {
+          title: "MARKETPLACE",
+          icon: "search",
+          items: ["Categories", "Favorites", "Reviews"],
+        },
+        {
+          title: "ORDERS",
+          icon: "shopping-bag",
+          items: ["Checkout", "Orders", "Tracking"],
+        },
+        {
+          title: "MYSQL",
+          icon: "database",
+          items: ["Users", "Listings", "Transactions"],
+        },
+      ],
     },
 
-    solution: {
-      title: "Centralize the workflow.",
-      content:
-        "The application provides a single system for managing records, searching information, and performing common administrative tasks.",
+    lessons: {
+      title: "My Learnings and decisions",
+
+      description:
+        "Building Nook taught me that a marketplace is less about displaying products and more about connecting the different states of a transaction into one reliable system.",
+
+      items: [
+        {
+          title: "A marketplace has two users in one",
+          description:
+            "The same person can be a buyer in one transaction and a seller in another. Designing around both roles made the product more flexible than treating them as completely separate experiences.",
+        },
+        {
+          title: "Listings are more than products",
+          description:
+            "A listing carries its own images, category, seller, availability, and state. Modeling those relationships properly became important for keeping the marketplace consistent.",
+        },
+        {
+          title: "The transaction needs a clear lifecycle",
+          description:
+            "Checkout is only one step. Orders, order items, and order events give the system a way to represent what happens after a purchase is made.",
+        },
+        {
+          title: "Images are part of the product experience",
+          description:
+            "For second-hand items, buyers rely heavily on visual information. Supporting multiple listing images made the product feel more like a real marketplace rather than a simple database of items.",
+        },
+        {
+          title: "Trust has to be part of the system",
+          description:
+            "Seller profiles, favorites, and reviews give buyers more context before purchasing. These features are small individually, but together they make the marketplace feel more trustworthy.",
+        },
+        {
+          title: "Keep the architecture organized around the domain",
+          description:
+            "Separating authentication, listings, marketplace features, checkout, orders, profiles, and reviews kept the backend easier to reason about as the number of features grew.",
+        },
+      ],
+
+      closing:
+        "Nook gave me a better understanding of how a real marketplace connects users, products, and transactions into one system.",
     },
 
-    features: [
-      "Record management",
-      "Search and filtering",
-      "Authentication",
-      "Responsive interface",
-    ],
-
-    github: "https://github.com/example/project-three",
+    // Add these when you have the real URLs.
+    // github: "...",
+    // live: "...",
   },
 ];

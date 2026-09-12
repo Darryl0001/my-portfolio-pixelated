@@ -3,6 +3,7 @@ import {
   SiCss,
   SiExpo,
   SiExpress,
+  SiFastapi,
   SiFlask,
   SiHtml5,
   SiJavascript,
@@ -27,6 +28,7 @@ const technologies = [
   { name: "Node.js", icon: SiNodedotjs, color: "#5FA04E" },
   { name: "Express", icon: SiExpress, color: "#151515" },
   { name: "Python", icon: SiPython, color: "#3776AB" },
+  { name: "FastAPI", icon: SiFastapi, color: "#009688" },
   { name: "Flask", icon: SiFlask, color: "#151515" },
   { name: "PHP", icon: SiPhp, color: "#777BB4" },
   { name: "Laravel", icon: SiLaravel, color: "#FF2D20" },
@@ -36,10 +38,8 @@ const technologies = [
   { name: "MySQL", icon: SiMysql, color: "#4479A1" },
 ];
 
-// Snappy mechanical curve matching the hero section
 const EASE_BRUTAL = [0.16, 1, 0.3, 1] as const;
 
-// Micro-interaction variants for individual technology blocks
 const blockVariants: Variants = {
   rest: {
     x: 0,
@@ -92,14 +92,14 @@ export default function Technologies() {
       "
     >
       <div className="mx-auto max-w-7xl">
+        {/* Outer Grid Wrapper with Left and Top Borders Only */}
         <div
           className="
             grid
             grid-cols-2
-            gap-px
-            border
+            border-l
+            border-t
             border-border
-            bg-border
             sm:grid-cols-3
             lg:grid-cols-8
           "
@@ -119,8 +119,9 @@ export default function Technologies() {
                 cursor-pointer
                 items-center
                 gap-4
-                border
-                border-transparent
+                border-b
+                border-r
+                border-border
                 bg-bg-main
                 px-5
                 py-5
