@@ -100,7 +100,7 @@ function ProjectCard({
             "
           />
 
-          {/* Image */}
+          {/* Thumbnail */}
           <div className="relative aspect-[16/10] overflow-hidden bg-bg-surface">
             <motion.img
               variants={imageVariants}
@@ -108,26 +108,6 @@ function ProjectCard({
               alt={`${project.title} project preview`}
               className="h-full w-full object-cover"
             />
-
-            {/* Project logo */}
-            {project.logo && (
-              <div
-                className="
-                  absolute left-3 top-3
-                  flex size-11
-                  items-center justify-center
-                  border border-fg-main
-                  bg-bg-main
-                  p-2
-                "
-              >
-                <img
-                  src={project.logo}
-                  alt={`${project.title} logo`}
-                  className="max-h-full max-w-full object-contain"
-                />
-              </div>
-            )}
 
             {/* Open project */}
             <motion.span
@@ -155,105 +135,62 @@ function ProjectCard({
             "
           >
             <div className="flex items-start justify-between gap-5">
-              <div>
-                <h3
-                  className="
-                    font-display
-                    text-xl
-                    font-bold
-                    uppercase
-                    leading-none
-                    tracking-[-0.045em]
-                    sm:text-2xl
-                  "
-                >
-                  {project.title}
-                </h3>
-
-                <div className="mt-2 flex items-center gap-2">
-                  <span className="size-1.5 bg-accent" />
-
-                  <p
+              {/* Project identity */}
+              <div className="flex min-w-0 items-start gap-3">
+                {/* Logo */}
+                {project.logo && (
+                  <div
                     className="
-                      font-mono
-                      text-[9px]
-                      font-medium
-                      uppercase
-                      tracking-[0.14em]
-                      text-fg-muted
+                      flex size-9
+                      shrink-0
+                      items-center
+                      justify-center
                     "
                   >
-                    {project.type}
-                  </p>
+                    <img
+                      src={project.logo}
+                      alt=""
+                      aria-hidden="true"
+                      className="max-h-full max-w-full object-contain"
+                    />
+                  </div>
+                )}
+
+                <div className="min-w-0">
+                  <h3
+                    className="
+                      font-display
+                      text-xl
+                      font-bold
+                      uppercase
+                      leading-none
+                      tracking-[-0.045em]
+                      sm:text-2xl
+                    "
+                  >
+                    {project.title}
+                  </h3>
+
+                  <div className="mt-2 flex items-center gap-2">
+
+                    <p
+                      className="
+                        text-[12px]
+                        font-medium
+                        uppercase
+                        tracking-[0.14em]
+                        text-fg-muted
+                      "
+                    >
+                      {project.type}
+                    </p>
+                  </div>
                 </div>
               </div>
 
-              {/* Project number */}
-              <span
-                className="
-                  shrink-0
-                  font-mono
-                  text-[8px]
-                  uppercase
-                  tracking-[0.14em]
-                  text-fg-subtle
-                "
-              >
-                {project.number} / {String(projects.length).padStart(2, "0")}
-              </span>
             </div>
 
-            {/* Tech stack */}
-            <div
-              className="
-                mt-5
-                flex
-                flex-wrap
-                gap-x-3
-                gap-y-2
-                border-t
-                border-border
-                pt-3
-              "
-            >
-              <span
-                className="
-                  mr-1
-                  font-mono
-                  text-[8px]
-                  uppercase
-                  tracking-[0.16em]
-                  text-fg-subtle
-                "
-              >
-                Built with
-              </span>
-
-              {project.stack.map((tech, index) => (
-                <span
-                  key={tech}
-                  className="
-                    inline-flex
-                    items-center
-                    gap-2
-                    font-mono
-                    text-[9px]
-                    font-medium
-                    uppercase
-                    tracking-[0.1em]
-                  "
-                >
-                  {index > 0 && (
-                    <span
-                      aria-hidden="true"
-                      className="size-1.5 bg-accent"
-                    />
-                  )}
-
-                  {tech}
-                </span>
-              ))}
-            </div>
+           
           </div>
         </div>
       </Link>
@@ -282,18 +219,7 @@ export default function Projects() {
         {/* Section heading */}
         <div className="mb-10 flex items-end justify-between sm:mb-12">
           <div>
-            <span
-              className="
-                font-mono
-                text-[9px]
-                uppercase
-                tracking-[0.18em]
-                text-fg-muted
-              "
-            >
-              Selected work
-            </span>
-
+  
             <h2
               className="
                 mt-2
@@ -311,17 +237,7 @@ export default function Projects() {
             </h2>
           </div>
 
-          <span
-            className="
-              font-mono
-              text-[9px]
-              uppercase
-              tracking-[0.12em]
-              text-fg-subtle
-            "
-          >
-            {String(projects.length).padStart(2, "0")} projects
-          </span>
+    
         </div>
 
         {/* Project grid */}

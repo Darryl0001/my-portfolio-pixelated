@@ -131,16 +131,7 @@ export default function Contact() {
       >
         {/* HEADER */}
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <motion.span
-              animate={{ opacity: [1, 0.3, 1] }}
-              transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-              className="size-2 bg-accent"
-            />
-            <span className="font-mono text-[9px] font-medium uppercase tracking-[0.18em] text-fg-muted">
-              Contact
-            </span>
-          </div>
+          
         </div>
 
         {/* INTRO */}

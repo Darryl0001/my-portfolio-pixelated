@@ -59,7 +59,7 @@ export const projects: Project[] = [
     number: "01",
     title: "CMU One",
     type: "AI - RAG",
-    stack: ["FastAPI", "TypeScript", "React" , "SQLite", "Ollama"],
+    stack: ["FastAPI", "TypeScript", "React" , "Tailwind CSS", "SQLite", "Ollama"],
     logo: "/images/cmu1/logo.png",
 
     thumbnail: "/images/cmu1/thumbnail.webp",
@@ -190,7 +190,7 @@ export const projects: Project[] = [
     number: "02",
     title: "Nook",
     type: "Marketplace",
-    stack: ["React", "TypeScript", "Laravel", "MySQL"],
+    stack: ["React", "Tailwind CSS", "TypeScript", "Laravel", "MySQL"],
     logo: "/images/nook/logo.png",
 
     thumbnail: "/images/nook/thumbnail.webp",
@@ -327,7 +327,7 @@ export const projects: Project[] = [
     number: "03",
     title: "Snax",
     type: "Computer Vision",
-    stack: ["React","Flask", "MySQL", "OpenCV"],
+    stack: ["React", "Tailwind CSS", "Flask", "MySQL", "OpenCV"],
     logo: "/images/snap-roster/logo.png",
 
     thumbnail: "/images/snap-roster/thumbnail.webp",

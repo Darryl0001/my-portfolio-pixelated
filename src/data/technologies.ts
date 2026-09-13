@@ -14,6 +14,7 @@ import {
   SiNextdotjs,
   SiNodedotjs,
   SiOllama,
+  SiOpencv,
   SiPhp,
   SiPython,
   SiReact,
@@ -103,5 +104,9 @@ export const technologies = {
   CSS: {
     icon: SiCss,
     color: "#1572B6",
+  },
+  OpenCV: {
+    icon: SiOpencv,
+    color: "#5C3EE8",
   },
 } as const;

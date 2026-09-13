@@ -19,7 +19,7 @@ export default function App() {
         {/* Dedicated project pages */}
         <Route path="/projects/cmu-one" element={<CMUOnePage />} />
         <Route path="/projects/nook" element={<NookPage />} />
-        <Route path="/projects/snap-roster" element={<SnapRosterPage />} />
+        <Route path="/projects/snax" element={<SnapRosterPage />} />
 
         {/* Generic project pages */}
         <Route path="/projects/:slug" element={<ProjectPage />} />

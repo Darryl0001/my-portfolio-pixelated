@@ -123,7 +123,7 @@ export default function About() {
               className="size-2 bg-accent"
             />
 
-            <span
+            {/* <span
               className="
                 font-mono
                 text-[9px]
@@ -134,7 +134,7 @@ export default function About() {
               "
             >
               About
-            </span>
+            </span> */}
           </div>
         </div>
 
