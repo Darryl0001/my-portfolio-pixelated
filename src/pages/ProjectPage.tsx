@@ -10,5 +10,5 @@ export default function ProjectPage() {
     return <CMUOnePage />;
   }
 
-  return <GenericProjectPage slug={slug} />;
+  return <GenericProjectPage />;
 }
