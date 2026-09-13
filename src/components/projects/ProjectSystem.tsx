@@ -1,15 +1,18 @@
-import { motion } from "framer-motion";
 import {
   Bot,
+  CheckSquare,
   Database,
+  FileText,
   Globe,
   Layers3,
+  Scan,
   Search,
   ShoppingBag,
   type LucideIcon,
 } from "lucide-react";
 
 import type { Project } from "../../data/projects";
+import { motion } from "framer-motion";
 
 type ProjectSystemProps = {
   project: Project;
@@ -22,12 +25,13 @@ const ICONS: Record<string, LucideIcon> = {
   database: Database,
   bot: Bot,
   "shopping-bag": ShoppingBag,
+  "file-text": FileText,
+  scan: Scan,
+  "check-square": CheckSquare,
 };
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-export default function ProjectSystem({
-  project,
-}: ProjectSystemProps) {
+export default function ProjectSystem({ project }: ProjectSystemProps) {
   const { system } = project;
 
   return (
@@ -55,10 +59,9 @@ export default function ProjectSystem({
             className="
               grid
               grid-cols-1
-              gap-px
-              border
+              border-l
+              border-t
               border-border
-              bg-border
               sm:grid-cols-2
               lg:grid-cols-3
             "
@@ -84,8 +87,9 @@ export default function ProjectSystem({
                     flex
                     min-h-[220px]
                     flex-col
-                    border
-                    border-transparent
+                    border-b
+                    border-r
+                    border-border
                     bg-bg-main
                     px-6
                     py-6

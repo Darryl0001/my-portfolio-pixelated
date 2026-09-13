@@ -17,13 +17,14 @@ export type ProjectLessons = {
   }[];
   closing?: string;
 };
-
 export type Project = {
   slug: string;
   number: string;
   title: string;
   type: string;
   stack: string[];
+
+  logo?: string;
 
   thumbnail: string;
   images: string[];
@@ -51,6 +52,7 @@ export type Project = {
   live?: string;
 };
 
+
 export const projects: Project[] = [
   {
     slug: "cmu-one",
@@ -58,6 +60,7 @@ export const projects: Project[] = [
     title: "CMU One",
     type: "AI - RAG",
     stack: ["FastAPI", "TypeScript", "React" , "SQLite", "Ollama"],
+    logo: "/images/cmu1/logo.png",
 
     thumbnail: "/images/cmu1/thumbnail.webp",
 
@@ -188,6 +191,7 @@ export const projects: Project[] = [
     title: "Nook",
     type: "Marketplace",
     stack: ["React", "TypeScript", "Laravel", "MySQL"],
+    logo: "/images/nook/logo.png",
 
     thumbnail: "/images/nook/thumbnail.webp",
 
@@ -309,6 +313,140 @@ export const projects: Project[] = [
 
       closing:
         "Nook gave me a better understanding of how a real marketplace connects users, products, and transactions into one system.",
+    },
+
+    // Add these when you have the real URLs.
+    // github: "...",
+    // live: "...",
+  },
+
+
+
+    {
+    slug: "snax",
+    number: "03",
+    title: "Snax",
+    type: "Computer Vision",
+    stack: ["React","Flask", "MySQL", "OpenCV"],
+    logo: "/images/snap-roster/logo.png",
+
+    thumbnail: "/images/snap-roster/thumbnail.webp",
+
+    images: [
+      "/images/snap-roster/01.webp",
+      "/images/snap-roster/02.webp",
+      "/images/snap-roster/03.webp",
+      "/images/snap-roster/04.webp",
+      "/images/snap-roster/05.webp",
+      "/images/snap-roster/06.webp",
+      "/images/snap-roster/07.webp",
+    ],
+
+    description:
+      "A computer vision attendance system that turns completed paper attendance sheets into structured attendance records.",
+
+    overview:
+      "SnapRoster keeps the familiar paper attendance process for students while automating the repetitive work that comes afterward. Instructors can create Flips, register members, generate standardized attendance sheets, scan completed sheets, and review the detected attendance before saving it to the database.",
+
+    problem: {
+      title: "The difficult part starts after the attendance sheet is filled.",
+
+      content:
+        "Paper attendance is already convenient for students and does not need to be replaced with a more complicated process. The difficulty appears when instructors manage multiple Flips and accumulate attendance sheets over time. Checking attendance for a particular session means repeatedly reviewing paper records and manually transferring results into a usable system.",
+    },
+
+    solution: {
+      title: "Keep paper attendance. Automate the processing.",
+
+      content:
+        "SnapRoster generates standardized attendance sheets containing student information, session columns, attendance boxes, and four predefined ArUco reference markers. After a sheet is completed, the instructor uploads a scan or photo. The system detects the markers, corrects the document perspective, aligns it with the original template, checks the stored attendance-box coordinates, and maps detected marks to the correct member and session. The instructor can then review, edit, and save the results.",
+    },
+
+    features: [
+      "User authentication",
+      "Flip management",
+      "Member registration",
+      "Attendance sheet generation",
+      "Daily attendance sheets",
+      "Event attendance sheets",
+      "Printable PDF generation",
+      "ArUco reference markers",
+      "Document detection",
+      "Perspective correction",
+      "Attendance-box detection",
+      "Coordinate-based recognition",
+      "Attendance result review",
+      "Manual result editing",
+      "Processed attendance storage",
+      "Attendance history",
+    ],
+
+    system: {
+      title: "The system behind the scanner.",
+
+      description:
+        "The system connects generated paper templates with computer vision processing. Every attendance box is associated with a member and session before the sheet is printed, allowing the scanner to focus on detecting marks rather than interpreting an unknown document.",
+
+      items: [
+        {
+          title: "ATTENDANCE V2",
+          icon: "globe",
+          items: ["Flips", "Members", "Attendance"],
+        },
+        {
+          title: "SHEET",
+          icon: "file-text",
+          items: ["PDF", "Sessions", "Coordinates"],
+        },
+        {
+          title: "ARUCO",
+          icon: "scan",
+          items: ["Markers", "Orientation", "Alignment"],
+        },
+        {
+          title: "VISION",
+          icon: "scan",
+          items: ["Perspective", "Box Detection", "Mark Recognition"],
+        },
+        {
+          title: "RECORDS",
+          icon: "database",
+          items: ["Members", "Sessions", "Attendance"],
+        },
+      ],
+    },
+
+    lessons: {
+      title: "My Learnings and decisions",
+
+      description:
+        "Attendance V2 taught me how an existing paper-based process can be improved without replacing the part that already works. The main challenge was designing a reliable connection between a generated document, its physical scanned version, and the records stored in the database.",
+
+    items: [
+      {
+        title: "Keep what already works",
+        description:
+          "Paper and pen attendance is already convenient for students, so we kept that process instead of replacing it with unnecessary technology.",
+      },
+      {
+        title: "Automate the repetitive work",
+        description:
+          "The main goal was to reduce the manual work instructors face when processing attendance from multiple sections and sessions.",
+      },
+      {
+        title: "ArUco markers make scanning reliable",
+        description:
+          "We moved from simple black-square markers to predefined ArUco markers so the sheet can be reliably detected, aligned, and handled even when its orientation changes.",
+      },
+      {
+        title: "Let instructors review the result",
+        description:
+          "Computer vision can make mistakes, so detected attendance can still be reviewed and edited before being saved.",
+      },
+    ],
+
+      closing:
+        "Attendance V2 is built around a simple principle: keep the convenient paper process for students, while removing the repetitive attendance work for instructors.",
     },
 
     // Add these when you have the real URLs.

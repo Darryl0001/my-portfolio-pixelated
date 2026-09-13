@@ -7,6 +7,7 @@ import { CMUOneProduct } from "../../features/cmu-one/CMUOneProduct";
 import ProjectLessons from "../../components/projects/ProjectLessons";
 import ProjectHero from "../../components/projects/ProjectHero";
 import ProjectSystem from "../../components/projects/ProjectSystem";
+import BackToTop from "../../components/BackToTop";
 
 export default function CMUOnePage() {
   const project = projects.find((item) => item.slug === "cmu-one");
@@ -22,6 +23,8 @@ export default function CMUOnePage() {
       <CMUOneProduct project={project} />
       <ProjectSystem project={project} />
       <ProjectLessons project={project} />
+
+      <BackToTop />
     </MainLayout>
   );
 }

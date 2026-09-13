@@ -109,21 +109,25 @@ function ProjectCard({
               className="h-full w-full object-cover"
             />
 
-            {/* Project number */}
-            <span
-              className="
-                absolute left-3 top-3
-                border border-fg-main
-                bg-bg-main
-                px-2.5 py-1.5
-                font-mono
-                text-[9px]
-                font-medium
-                tracking-[0.12em]
-              "
-            >
-              {project.number}
-            </span>
+            {/* Project logo */}
+            {project.logo && (
+              <div
+                className="
+                  absolute left-3 top-3
+                  flex size-11
+                  items-center justify-center
+                  border border-fg-main
+                  bg-bg-main
+                  p-2
+                "
+              >
+                <img
+                  src={project.logo}
+                  alt={`${project.title} logo`}
+                  className="max-h-full max-w-full object-contain"
+                />
+              </div>
+            )}
 
             {/* Open project */}
             <motion.span
@@ -184,6 +188,7 @@ function ProjectCard({
                 </div>
               </div>
 
+              {/* Project number */}
               <span
                 className="
                   shrink-0

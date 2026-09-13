@@ -1,14 +1,14 @@
 import MainLayout from "../../layouts/MainLayout";
 import ProjectHero from "../../components/projects/ProjectHero";
-import ProjectLessons from "../../components/projects/ProjectLessons";
 import ProjectSystem from "../../components/projects/ProjectSystem";
-import NookIdea from "../../features/nook/NookIdea";
-import BackToTop from "../../components/BackToTop";
+import ProjectLessons from "../../components/projects/ProjectLessons";
 import { projects } from "../../data/projects";
+import SnapRosterApproach from "../../features/snap-roster/SnapRosterApproach";
+import SnapRosterProcess from "../../features/snap-roster/SnapRosterProcess";
+import BackToTop from "../../components/BackToTop";
 
-const project = projects.find((item) => item.slug === "nook");
-
-export default function NookPage() {
+const project = projects.find((item) => item.slug === "snap-roster");
+export default function SnapRosterPage() {
   if (!project) {
     return null;
   }
@@ -16,10 +16,10 @@ export default function NookPage() {
   return (
     <MainLayout>
       <ProjectHero project={project} />
-      <NookIdea project={project} />
+      <SnapRosterApproach />
+      <SnapRosterProcess project={project} />
       <ProjectSystem project={project} />
       <ProjectLessons project={project} />
-
       <BackToTop />
     </MainLayout>
   );

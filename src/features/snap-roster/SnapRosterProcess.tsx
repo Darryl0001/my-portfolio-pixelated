@@ -1,51 +1,60 @@
 import { motion } from "framer-motion";
 import type { Project } from "../../data/projects";
 
-type NookIdeaProps = {
+type SnapRosterProcessProps = {
   project: Project;
 };
-
-const EASE = [0.16, 1, 0.3, 1] as const;
 
 const moments = [
   {
     number: "01",
-    title: "DISCOVER",
-    description:
-      "Browse second-hand items through listings, categories, and product details.",
-    imageIndex: 1,
+    title: "GENERATE",
+    description: "Create a standardized attendance sheet.",
+    imageIndex: 0,
   },
   {
     number: "02",
-    title: "LIST",
-    description:
-      "Create and manage listings with images, categories, and product details.",
-    imageIndex: 2,
+    title: "PRINT",
+    description: "Print the generated sheet.",
+    imageIndex: 1,
   },
   {
     number: "03",
-    title: "BUY",
-    description:
-      "Move from a product listing into checkout and complete the purchase.",
-    imageIndex: 3,
+    title: "FILL",
+    description: "Students mark their attendance.",
+    imageIndex: 2,
   },
   {
     number: "04",
-    title: "TRACK",
-    description:
-      "Follow purchases through their order status after checkout.",
-    imageIndex: 4,
+    title: "SCAN",
+    description: "Upload the completed sheet.",
+    imageIndex: 3,
   },
   {
     number: "05",
+    title: "DETECT",
+    description: "Computer vision reads the marks.",
+    imageIndex: 4,
+  },
+  {
+    number: "06",
     title: "REVIEW",
-    description:
-      "Review sellers after a transaction and add another layer of trust to the marketplace.",
+    description: "Review the detected results.",
     imageIndex: 5,
+  },
+  {
+    number: "07",
+    title: "SAVE",
+    description: "Store the final attendance records.",
+    imageIndex: 6,
   },
 ];
 
-export default function NookIdea({ project }: NookIdeaProps) {
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+export default function SnapRosterProcess({
+  project,
+}: SnapRosterProcessProps) {
   const hasOddCount = moments.length % 2 !== 0;
 
   return (
@@ -59,47 +68,24 @@ export default function NookIdea({ project }: NookIdeaProps) {
           transition={{ duration: 0.5, ease: EASE }}
         >
           <p className="font-mono text-[10px] tracking-[0.14em] text-fg-subtle">
-            02 / THE IDEA
+            02 / THE PROCESS
           </p>
 
           <h2 className="mt-5 max-w-4xl font-display text-4xl font-semibold leading-[0.92] tracking-[-0.05em] sm:text-6xl lg:text-7xl">
-            A marketplace built around
-            <br className="hidden sm:block" /> the full transaction.
+            From paper
+            <br className="hidden sm:block" /> to digital records.
           </h2>
 
           <p className="mt-7 max-w-2xl text-[15px] leading-7 text-fg-muted sm:text-base">
-            Nook was built as a second-hand marketplace where the same user
-            can discover items, sell their own products, complete purchases,
-            and review sellers.
+            One workflow from a printed attendance sheet to a stored record.
           </p>
         </motion.div>
 
-        {/* Main image */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.55, ease: EASE }}
-          className="mt-14 sm:mt-20"
-        >
-          <div className="relative">
-            <div className="absolute inset-0 translate-x-2 translate-y-2 bg-fg-main" />
-
-            <div className="relative overflow-hidden border-2 border-fg-main bg-bg-surface">
-              <img
-                src={project.images[0]}
-                alt="Nook marketplace interface"
-                className="block h-auto w-full"
-              />
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Product moments */}
-        <div className="mt-20 sm:mt-28">
+        {/* Process grid */}
+        <div className="mt-14 sm:mt-20">
           <div className="grid gap-x-6 gap-y-14 md:grid-cols-2 md:gap-y-20">
             {moments.map((moment, index) => {
-              const image = project.images[moment.imageIndex];
+              const image = project?.images?.[moment.imageIndex] ?? "";
               const isLast = index === moments.length - 1;
 
               return (
@@ -107,15 +93,15 @@ export default function NookIdea({ project }: NookIdeaProps) {
                   key={moment.number}
                   initial={{ opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-80px" }}
+                  viewport={{ once: true, margin: "-60px" }}
                   transition={{
                     duration: 0.5,
-                    delay: index * 0.05,
+                    delay: (index % 2) * 0.1,
                     ease: EASE,
                   }}
                   className={
                     hasOddCount && isLast
-                      ? "md:col-span-2 md:justify-self-center md:w-[calc(50%-0.75rem)]"
+                      ? "md:col-span-2 md:w-[calc(50%-0.75rem)] md:justify-self-center"
                       : ""
                   }
                 >
@@ -125,11 +111,17 @@ export default function NookIdea({ project }: NookIdeaProps) {
                       <div className="absolute inset-0 translate-x-2 translate-y-2 bg-fg-main transition-transform duration-300 group-hover:translate-x-3 group-hover:translate-y-3" />
 
                       <div className="relative overflow-hidden border-2 border-fg-main bg-bg-surface">
-                        <img
-                          src={image}
-                          alt={`Nook ${moment.title.toLowerCase()} interface`}
-                          className="block aspect-[16/10] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.015]"
-                        />
+                        {image ? (
+                          <img
+                            src={image}
+                            alt={`Attendance V2 ${moment.title.toLowerCase()} step`}
+                            loading="lazy"
+                            decoding="async"
+                            className="block aspect-[16/10] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.015]"
+                          />
+                        ) : (
+                          <div className="block aspect-[16/10] w-full bg-bg-muted" />
+                        )}
                       </div>
                     </div>
 
@@ -155,8 +147,6 @@ export default function NookIdea({ project }: NookIdeaProps) {
             })}
           </div>
         </div>
-
-      
       </div>
     </section>
   );
