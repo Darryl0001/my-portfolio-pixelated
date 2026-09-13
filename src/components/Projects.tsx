@@ -1,5 +1,5 @@
 import { motion, type Variants } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ArrowDown } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import { projects, type Project } from "../data/projects";
@@ -67,20 +67,13 @@ const arrowVariants: Variants = {
   },
 };
 
-function ProjectCard({
-  project,
-  large = false,
-}: {
-  project: Project;
-  large?: boolean;
-}) {
+function ProjectCard({ project }: { project: Project }) {
   return (
     <motion.div
       variants={cardVariants}
       initial="rest"
       whileHover="hover"
       whileTap="tap"
-      className={large ? "lg:col-span-2" : ""}
     >
       <Link
         to={`/projects/${project.slug}`}
@@ -120,7 +113,10 @@ function ProjectCard({
                 bg-bg-main
               "
             >
-              <ArrowUpRight size={16} />
+              <ArrowUpRight
+                size={16}
+                aria-hidden="true"
+              />
             </motion.span>
           </div>
 
@@ -134,19 +130,11 @@ function ProjectCard({
               sm:px-5 sm:py-5
             "
           >
-            <div className="flex items-start justify-between gap-5">
+            <div className="flex items-start justify-between gap-4">
               {/* Project identity */}
               <div className="flex min-w-0 items-start gap-3">
-                {/* Logo */}
                 {project.logo && (
-                  <div
-                    className="
-                      flex size-9
-                      shrink-0
-                      items-center
-                      justify-center
-                    "
-                  >
+                  <div className="flex size-9 shrink-0 items-center justify-center">
                     <img
                       src={project.logo}
                       alt=""
@@ -171,26 +159,35 @@ function ProjectCard({
                     {project.title}
                   </h3>
 
-                  <div className="mt-2 flex items-center gap-2">
-
-                    <p
-                      className="
-                        text-[12px]
-                        font-medium
-                        uppercase
-                        tracking-[0.14em]
-                        text-fg-muted
-                      "
-                    >
-                      {project.type}
-                    </p>
-                  </div>
+                  <p
+                    className="
+                      mt-2
+                      text-[12px]
+                      font-medium
+                      uppercase
+                      tracking-[0.14em]
+                      text-fg-muted
+                    "
+                  >
+                    {project.type}
+                  </p>
                 </div>
               </div>
 
+              {/* Project number */}
+              <span
+                className="
+                  shrink-0
+                  font-mono
+                  text-[9px]
+                  uppercase
+                  tracking-[0.14em]
+                  text-fg-subtle
+                "
+              >
+                {project.number}
+              </span>
             </div>
-
-           
           </div>
         </div>
       </Link>
@@ -217,44 +214,58 @@ export default function Projects() {
     >
       <div className="mx-auto max-w-7xl">
         {/* Section heading */}
-        <div className="mb-10 flex items-end justify-between sm:mb-12">
-          <div>
-  
-            <h2
-              className="
-                mt-2
-                font-display
-                text-4xl
-                font-bold
-                uppercase
-                leading-none
-                tracking-[-0.06em]
-                sm:text-5xl
-                lg:text-6xl
-              "
-            >
-              Projects
-            </h2>
-          </div>
+        <div className="mb-10 flex flex-col gap-5 sm:mb-12 sm:flex-row sm:items-end sm:justify-between">
+        <h2
+          className="
+            font-display
+            text-4xl
+            font-bold
+            uppercase
+            leading-none
+            tracking-[-0.06em]
+            sm:text-5xl
+            lg:text-6xl
+          "
+        >
+          Projects
+        </h2>
 
-    
+        <div className="flex items-center gap-2 sm:pb-1">
+          <span
+            className="
+              font-mono
+              text-[10px]
+              font-medium
+              uppercase
+              tracking-[0.12em]
+              text-fg-muted
+            "
+          >
+            Click project to view case study
+          </span>
+
+          <ArrowDown
+            size={16}
+            strokeWidth={2}
+            aria-hidden="true"
+          />
         </div>
-
+      </div>
         {/* Project grid */}
         <div
           className="
             grid
             grid-cols-1
             gap-8
-            lg:grid-cols-4
+            sm:grid-cols-2
+            lg:grid-cols-3
             lg:gap-6
           "
         >
-          {projects.map((project, index) => (
+          {projects.map((project) => (
             <ProjectCard
               key={project.slug}
               project={project}
-              large={index === 0 || index === 4 || index === 8}
             />
           ))}
         </div>
