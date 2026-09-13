@@ -1,46 +1,53 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
+
   return (
     <header className="relative z-50 h-16 border-b border-border bg-bg-main">
       <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-6 sm:px-8 lg:px-12">
-        <a
-          href="#home"
+        {/* Logo */}
+        <Link
+          to="/#home"
+          onClick={closeMenu}
           className="text-sm font-semibold tracking-[-0.02em]"
         >
           Darryl.
-        </a>
+        </Link>
 
         {/* Desktop Nav */}
         <nav className="hidden items-center gap-7 md:flex">
-          <a
-            href="#projects"
+          <Link
+            to="/#projects"
             className="text-sm text-fg-muted transition-colors hover:text-fg-main"
           >
             Work
-          </a>
+          </Link>
 
-          <a
-            href="#about"
+          <Link
+            to="/#about"
             className="text-sm text-fg-muted transition-colors hover:text-fg-main"
           >
             About
-          </a>
+          </Link>
 
-          <a
-            href="#contact"
+          <Link
+            to="/#contact"
             className="text-sm text-fg-muted transition-colors hover:text-fg-main"
           >
             Contact
-          </a>
+          </Link>
         </nav>
 
         {/* Desktop CTA */}
-        <a
-          href="#contact"
+        <Link
+          to="/#contact"
           className="
             hidden
             border-b
@@ -52,51 +59,76 @@ export default function Header() {
           "
         >
           Let's talk
-        </a>
+        </Link>
 
-        {/* Mobile Menu Toggle Button */}
+        {/* Mobile Menu Toggle */}
         <button
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
-          className="flex size-9 items-center justify-center border border-fg-main bg-bg-main text-fg-main md:hidden"
+          className="
+            flex
+            size-9
+            items-center
+            justify-center
+            border
+            border-fg-main
+            bg-bg-main
+            text-fg-main
+            md:hidden
+          "
           aria-label={isOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isOpen}
         >
           {isOpen ? <X size={18} /> : <Menu size={18} />}
         </button>
       </div>
 
-      {/* Mobile Menu Drawer */}
+      {/* Mobile Menu */}
       {isOpen && (
-        <div className="absolute left-0 top-16 w-full border-b border-fg-main bg-bg-main px-6 py-6 shadow-[0_4px_0_var(--color-fg-main)] md:hidden">
+        <div
+          className="
+            absolute
+            left-0
+            top-16
+            w-full
+            border-b
+            border-fg-main
+            bg-bg-main
+            px-6
+            py-6
+            shadow-[0_4px_0_var(--color-fg-main)]
+            md:hidden
+          "
+        >
           <nav className="flex flex-col gap-4">
-            <a
-              href="#projects"
-              onClick={() => setIsOpen(false)}
+            <Link
+              to="/#projects"
+              onClick={closeMenu}
               className="text-sm text-fg-muted transition-colors hover:text-fg-main"
             >
               Work
-            </a>
+            </Link>
 
-            <a
-              href="#about"
-              onClick={() => setIsOpen(false)}
+            <Link
+              to="/#about"
+              onClick={closeMenu}
               className="text-sm text-fg-muted transition-colors hover:text-fg-main"
             >
               About
-            </a>
+            </Link>
 
-            <a
-              href="#contact"
-              onClick={() => setIsOpen(false)}
+            <Link
+              to="/#contact"
+              onClick={closeMenu}
               className="text-sm text-fg-muted transition-colors hover:text-fg-main"
             >
               Contact
-            </a>
+            </Link>
 
             <div className="pt-2">
-              <a
-                href="#contact"
-                onClick={() => setIsOpen(false)}
+              <Link
+                to="/#contact"
+                onClick={closeMenu}
                 className="
                   inline-block
                   border-b
@@ -107,7 +139,7 @@ export default function Header() {
                 "
               >
                 Let's talk
-              </a>
+              </Link>
             </div>
           </nav>
         </div>
