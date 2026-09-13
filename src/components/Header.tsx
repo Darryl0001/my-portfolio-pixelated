@@ -1,6 +1,11 @@
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
+
 export default function Header() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <header className="relative z-50 h-16">
+    <header className="relative z-50 h-16 border-b border-border bg-bg-main">
       <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-6 sm:px-8 lg:px-12">
         <a
           href="#home"
@@ -9,6 +14,7 @@ export default function Header() {
           Darryl.
         </a>
 
+        {/* Desktop Nav */}
         <nav className="hidden items-center gap-7 md:flex">
           <a
             href="#projects"
@@ -32,6 +38,7 @@ export default function Header() {
           </a>
         </nav>
 
+        {/* Desktop CTA */}
         <a
           href="#contact"
           className="
@@ -46,7 +53,65 @@ export default function Header() {
         >
           Let's talk
         </a>
+
+        {/* Mobile Menu Toggle Button */}
+        <button
+          type="button"
+          onClick={() => setIsOpen((prev) => !prev)}
+          className="flex size-9 items-center justify-center border border-fg-main bg-bg-main text-fg-main md:hidden"
+          aria-label={isOpen ? "Close menu" : "Open menu"}
+        >
+          {isOpen ? <X size={18} /> : <Menu size={18} />}
+        </button>
       </div>
+
+      {/* Mobile Menu Drawer */}
+      {isOpen && (
+        <div className="absolute left-0 top-16 w-full border-b border-fg-main bg-bg-main px-6 py-6 shadow-[0_4px_0_var(--color-fg-main)] md:hidden">
+          <nav className="flex flex-col gap-4">
+            <a
+              href="#projects"
+              onClick={() => setIsOpen(false)}
+              className="text-sm text-fg-muted transition-colors hover:text-fg-main"
+            >
+              Work
+            </a>
+
+            <a
+              href="#about"
+              onClick={() => setIsOpen(false)}
+              className="text-sm text-fg-muted transition-colors hover:text-fg-main"
+            >
+              About
+            </a>
+
+            <a
+              href="#contact"
+              onClick={() => setIsOpen(false)}
+              className="text-sm text-fg-muted transition-colors hover:text-fg-main"
+            >
+              Contact
+            </a>
+
+            <div className="pt-2">
+              <a
+                href="#contact"
+                onClick={() => setIsOpen(false)}
+                className="
+                  inline-block
+                  border-b
+                  border-fg-main
+                  pb-0.5
+                  text-sm
+                  font-medium
+                "
+              >
+                Let's talk
+              </a>
+            </div>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
