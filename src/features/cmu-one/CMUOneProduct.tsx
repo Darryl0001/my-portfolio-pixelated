@@ -36,7 +36,7 @@ const moments = [
 ];
 
 // Clean, predictable ease curve for structural UI elements
-const EASE = [0.16, 1, 0.3, 1];
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 export function CMUOneProduct({ project }: CMUOneProductProps) {
   return (
