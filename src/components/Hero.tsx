@@ -447,23 +447,7 @@ export default function Hero() {
                     py-2
                   "
                 >
-                  <div>
-                    <p className="text-[11px] font-semibold tracking-tight">
-                      Darryl Macarandan
-                    </p>
-                    <p
-                      className="
-                        mt-0.5
-                        font-mono
-                        text-[7px]
-                        uppercase
-                        tracking-[0.12em]
-                        text-fg-muted
-                      "
-                    >
-                      Software Developer
-                    </p>
-                  </div>
+                  
                 </div>
               </div>
             </motion.div>
