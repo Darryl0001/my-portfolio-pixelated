@@ -241,7 +241,7 @@ export default function Projects() {
               text-fg-muted
             "
           >
-            Click project to view case study
+            Click a project to view case study
           </span>
 
           <ArrowDown
