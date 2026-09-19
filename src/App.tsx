@@ -6,7 +6,7 @@ import ProjectPage from "./pages/ProjectPage";
 import CMUOnePage from "./pages/projects/CMUOnePage";
 import NookPage from "./pages/projects/NookPage";
 import SnapRosterPage from "./pages/projects/SnapRosterPage";
-
+import NotFoundPage from "./pages/NotFoundPage";
 
 export default function App() {
   return (
@@ -23,6 +23,8 @@ export default function App() {
 
         {/* Generic project pages */}
         <Route path="/projects/:slug" element={<ProjectPage />} />
+
+         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );
