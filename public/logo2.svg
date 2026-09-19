@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="100%" height="100%">
+  <!-- Shadow / Accent offset square in darker charcoal gray -->
+  <rect x="7" y="7" width="22" height="22" rx="1.5" fill="#1c1d21" />
+
+  <!-- Front square in #d7ff3f with subtle dark gray border for contrast -->
+  <rect x="3" y="3" width="22" height="22" rx="1.5" fill="#d7ff3f" stroke="#2a2b30" stroke-width="1.5" stroke-linejoin="round" />
+</svg>
