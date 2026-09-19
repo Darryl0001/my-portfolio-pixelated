@@ -1,148 +1,119 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
 
-const EASE_BRUTAL = [0.16, 1, 0.3, 1] as const;
+export default function Header() {
+  const [isOpen, setIsOpen] = useState(false);
 
-const notes = [
-  {
-    number: "01",
-    title: "The data model shapes the product",
-    description:
-      "The assistant is only as useful as the information behind it. Structuring, categorizing, and verifying university information became just as important as the AI itself.",
-  },
-  {
-    number: "02",
-    title: "Keep the AI behind a controlled system",
-    description:
-      "We chose RAG instead of letting the model answer freely. The goal was not to make it sound intelligent at all costs, but to keep answers grounded in information we actually have.",
-  },
-  {
-    number: "03",
-    title: "Separate information from location",
-    description:
-      "Location data was kept connected to knowledge entries instead of being mixed into the AI's context. This kept the retrieval system cleaner while allowing the same information to power the campus map.",
-  },
-  {
-    number: "04",
-    title: "Build around the actual problem",
-    description:
-      "We kept the architecture small for the first version: FastAPI, SQLite, vector search, and a simple admin flow. There was no need to introduce a larger stack before the product needed it.",
-  },
-  {
-    number: "05",
-    title: "Features should work as one system",
-    description:
-      "The map became more useful when it was connected to the assistant. If an answer tells a student where something is, the next useful step is helping them find it.",
-  },
-  {
-    number: "06",
-    title: "V1 should stay focused",
-    description:
-      "A university assistant could eventually do much more, but adding everything early would make the system harder to maintain and trust. The first version focuses on finding information, understanding it, and acting on it.",
-  },
-];
-
-export function CMUOneLessons() {
   return (
-    <section className="border-b border-border bg-bg-main">
-      <div className="mx-auto max-w-5xl px-6 py-20 sm:px-8 sm:py-28 lg:px-12 lg:py-32">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={{
-            hidden: {},
-            visible: {
-              transition: {
-                staggerChildren: 0.05,
-              },
-            },
-          }}
+    <header className="relative z-50 h-16 border-b border-border bg-bg-main">
+      <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-6 sm:px-8 lg:px-12">
+        <a
+          href="#home"
+          className="text-sm font-semibold tracking-[-0.02em]"
         >
-          {/* Heading */}
-          <motion.div
-            variants={{
-              hidden: { opacity: 0, y: 14 },
-              visible: {
-                opacity: 1,
-                y: 0,
-                transition: {
-                  duration: 0.5,
-                  ease: EASE_BRUTAL,
-                },
-              },
-            }}
+          Darryl.
+        </a>
+
+        {/* Desktop Nav */}
+        <nav className="hidden items-center gap-7 md:flex">
+          <a
+            href="#projects"
+            className="text-sm text-fg-muted transition-colors hover:text-fg-main"
           >
-            <h2 className="text-4xl font-semibold leading-none tracking-[-0.045em] sm:text-5xl">
-              My Learnings and decisions
-            </h2>
-          </motion.div>
+            Work
+          </a>
 
-          {/* Notes */}
-          <div className="mt-12 sm:mt-16">
-            {notes.map((note) => (
-              <motion.article
-                key={note.number}
-                variants={{
-                  hidden: { opacity: 0, y: 10 },
-                  visible: {
-                    opacity: 1,
-                    y: 0,
-                    transition: {
-                      duration: 0.4,
-                      ease: EASE_BRUTAL,
-                    },
-                  },
-                }}
-                className="border-t border-border py-9 sm:py-11"
-              >
-                <div className="grid gap-5 sm:grid-cols-[64px_minmax(0,1fr)] sm:gap-8">
-                  {/* Number */}
-                  <span className="pt-1 font-mono text-[10px] tracking-[0.12em] text-fg-subtle">
-                    {note.number}
-                  </span>
-
-                  {/* Content */}
-                  <div className="max-w-3xl">
-                    <h3 className="max-w-2xl text-xl font-medium leading-[1.15] tracking-[-0.025em] sm:text-2xl">
-                      {note.title}
-                    </h3>
-
-                    <p className="mt-5 max-w-2xl text-[15px] leading-7 text-fg-muted sm:text-base sm:leading-7">
-                      {note.description}
-                    </p>
-                  </div>
-                </div>
-              </motion.article>
-            ))}
-
-            <div className="border-t border-border" />
-          </div>
-
-          {/* Closing note */}
-          <motion.div
-            variants={{
-              hidden: { opacity: 0, y: 10 },
-              visible: {
-                opacity: 1,
-                y: 0,
-                transition: {
-                  duration: 0.5,
-                  ease: EASE_BRUTAL,
-                },
-              },
-            }}
-            className="pt-14 sm:pt-16"
+          <a
+            href="#about"
+            className="text-sm text-fg-muted transition-colors hover:text-fg-main"
           >
-            <p className="max-w-lg text-[15px] leading-7 text-fg-muted sm:text-base">
-              CMU One is still a work in progress. There is more to improve,
-              but the direction is clear.
-            </p>
-          </motion.div>
-        </motion.div>
+            About
+          </a>
+
+          <a
+            href="#contact"
+            className="text-sm text-fg-muted transition-colors hover:text-fg-main"
+          >
+            Contact
+          </a>
+        </nav>
+
+        {/* Desktop CTA */}
+        <a
+          href="#contact"
+          className="
+            hidden
+            border-b
+            border-fg-main
+            pb-0.5
+            text-sm
+            font-medium
+            md:block
+          "
+        >
+          Let's talk
+        </a>
+
+        {/* Mobile Menu Toggle Button */}
+        <button
+          type="button"
+          onClick={() => setIsOpen((prev) => !prev)}
+          className="flex size-9 items-center justify-center border border-fg-main bg-bg-main text-fg-main md:hidden"
+          aria-label={isOpen ? "Close menu" : "Open menu"}
+        >
+          {isOpen ? <X size={18} /> : <Menu size={18} />}
+        </button>
       </div>
-    </section>
+
+      {/* Mobile Menu Drawer */}
+      {isOpen && (
+        <div className="absolute left-0 top-16 w-full border-b border-fg-main bg-bg-main px-6 py-6 shadow-[0_4px_0_var(--color-fg-main)] md:hidden">
+          <nav className="flex flex-col gap-4">
+            <a
+              href="#projects"
+              onClick={() => setIsOpen(false)}
+              className="text-sm text-fg-muted transition-colors hover:text-fg-main"
+            >
+              Work
+            </a>
+
+            <a
+              href="#about"
+              onClick={() => setIsOpen(false)}
+              className="text-sm text-fg-muted transition-colors hover:text-fg-main"
+            >
+              About
+            </a>
+
+            <a
+              href="#contact"
+              onClick={() => setIsOpen(false)}
+              className="text-sm text-fg-muted transition-colors hover:text-fg-main"
+            >
+              Contact
+            </a>
+
+            <div className="pt-2">
+              <a
+                href="#contact"
+                onClick={() => setIsOpen(false)}
+                className="
+                  inline-block
+                  border-b
+                  border-fg-main
+                  pb-0.5
+                  text-sm
+                  font-medium
+                "
+              >
+                Let's talk
+              </a>
+            </div>
+          </nav>
+        </div>
+      )}
+    </header>
   );
 }
 
-
-how about this
+can u fix the url here when i go to other route this urls wont work anymore

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Multimedia Poster — Visual Concept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4 portrait; margin: 0; }
+
+  :root {
+    --paper: #f5f3ee;
+    --ink: #111111;
+    --muted: #65635d;
+    --accent: #d7ff3f;
+    --line: #cfcac0;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    min-height: 100%;
+    background: #d9d6ce;
+  }
+
+  body {
+    display: grid;
+    place-items: center;
+    padding: 32px;
+    font-family: Inter, sans-serif;
+  }
+
+  .poster {
+    position: relative;
+    width: 210mm;
+    height: 297mm;
+    overflow: hidden;
+    padding: 16mm 18mm 16mm;
+    background: var(--paper);
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  /* CROPPING / REGISTRATION MARK (TOP-RIGHT) */
+  .corner {
+    position: absolute;
+    width: 14mm;
+    height: 14mm;
+    right: 8mm;
+    top: 8mm;
+    border-left: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    opacity: 0.25;
+  }
+
+  .corner::after {
+    content: "";
+    position: absolute;
+    width: 4mm;
+    height: 4mm;
+    background: var(--accent);
+    right: -1px;
+    top: -1px;
+  }
+
+  /* 1. GRAPHIC CANVAS AREA */
+  .visual-wrap {
+    position: relative;
+    width: 100%;
+    height: 145mm;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .visual {
+    position: relative;
+    width: 142mm;
+    height: 135mm;
+  }
+
+  /* GREEN ACCENT DOT */
+  .accent-dot {
+    position: absolute;
+    width: 7.5mm;
+    height: 7.5mm;
+    border-radius: 50%;
+    background: var(--accent);
+    left: 50%;
+    top: 2mm;
+    transform: translateX(-50%);
+  }
+
+  /* CENTER DIAMOND CORE */
+  .core {
+    position: absolute;
+    left: 50%;
+    top: 52%;
+    width: 58mm;
+    height: 58mm;
+    transform: translate(-50%, -50%) rotate(45deg);
+    background: var(--ink);
+  }
+
+  .core::after {
+    content: "";
+    position: absolute;
+    inset: 11mm;
+    background: var(--paper);
+  }
+
+  /* TOP-LEFT TEXT (T-Y-PE) */
+  .letters {
+    position: absolute;
+    left: 4mm;
+    top: 20mm;
+    display: flex;
+    flex-direction: column;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 16mm;
+    line-height: .78;
+    letter-spacing: -.08em;
+  }
+
+  .letters span:nth-child(2) { margin-left: 6mm; }
+  .letters span:nth-child(3) { margin-left: 1mm; }
+
+  /* TOP-RIGHT IMAGE FRAGMENT */
+  .image-fragment {
+    position: absolute;
+    right: 6mm;
+    top: 12mm;
+    width: 35mm;
+    height: 42mm;
+    border: 3mm solid var(--ink);
+    transform: rotate(-8deg);
+    overflow: hidden;
+  }
+
+  .image-fragment::before {
+    content: "";
+    position: absolute;
+    width: 24mm;
+    height: 24mm;
+    border-radius: 50%;
+    background: var(--accent);
+    top: 4mm;
+    left: 5mm;
+  }
+
+  .image-fragment::after {
+    content: "";
+    position: absolute;
+    width: 45mm;
+    height: 22mm;
+    background: var(--ink);
+    transform: rotate(-35deg);
+    left: -7mm;
+    bottom: -5mm;
+  }
+
+  /* BOTTOM-LEFT SOUND WAVE */
+  .sound {
+    position: absolute;
+    left: 18mm;
+    bottom: 6mm;
+    width: 48mm;
+    height: 29mm;
+    display: flex;
+    align-items: center;
+    gap: 1.7mm;
+  }
+
+  .sound i {
+    display: block;
+    width: 1.8mm;
+    background: var(--ink);
+  }
+
+  .sound i:nth-child(1) { height: 8mm; }
+  .sound i:nth-child(2) { height: 16mm; }
+  .sound i:nth-child(3) { height: 24mm; }
+  .sound i:nth-child(4) { height: 13mm; }
+  .sound i:nth-child(5) { height: 19mm; }
+  .sound i:nth-child(6) { height: 27mm; }
+  .sound i:nth-child(7) { height: 15mm; }
+  .sound i:nth-child(8) { height: 8mm; }
+  .sound i:nth-child(9) { height: 20mm; }
+  .sound i:nth-child(10) { height: 12mm; }
+  .sound i:nth-child(11) { height: 25mm; }
+  .sound i:nth-child(12) { height: 9mm; }
+
+  /* BOTTOM-RIGHT MOTION FRAMES */
+  .motion {
+    position: absolute;
+    right: 14mm;
+    bottom: 6mm;
+    width: 44mm;
+    height: 28mm;
+  }
+
+  .motion span {
+    position: absolute;
+    width: 25mm;
+    height: 17mm;
+    border: 2px solid var(--ink);
+    transform: rotate(-15deg);
+  }
+
+  .motion span:nth-child(1) { right: 0; top: 0; }
+  .motion span:nth-child(2) { right: 7mm; top: 4mm; }
+  .motion span:nth-child(3) { right: 14mm; top: 8mm; }
+
+  /* 2. TEXT & HEADLINE CONTENT */
+  .content-block {
+    margin-top: 5mm;
+    display: flex;
+    flex-direction: column;
+    gap: 5mm;
+    align-items: center;
+    text-align: center;
+  }
+
+  .headline {
+    margin: 0;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 19mm;
+    line-height: .82;
+    letter-spacing: -.06em;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-top: 80px;
+  }
+
+  .description {
+    max-width: 62mm;
+    font-size: 9.5px;
+    line-height: 1.45;
+    color: var(--muted);
+  }
+
+  .description strong {
+    display: block;
+    margin-bottom: 2mm;
+    color: var(--ink);
+    font-size: 8.5px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+
+  /* 3. FOOTER (CALL TO ACTION) */
+  .bottom {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-top: auto;
+  }
+
+  .mark {
+    padding: 10px 16px;
+    border: 1.5px solid var(--ink);
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 9.5px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    background: transparent;
+    background-color: var(--accent);
+  }
+
+  /* MEDIA QUERIES FOR SCREEN PREVIEW */
+  @media screen and (max-width: 900px) {
+    body { padding: 16px; }
+    .poster {
+      width: min(210mm, 92vw);
+      height: calc(min(210mm, 92vw) * 1.4142857);
+    }
+  }
+
+  @media print {
+    body { padding: 0; background: none; }
+    .poster { box-shadow: none; }
+  }
+</style>
+</head>
+
+<body>
+
+<main class="poster">
+
+  <!-- Corner registration detail -->
+  <div class="corner"></div>
+
+  <!-- Graphic Composition Area -->
+  <section class="visual-wrap">
+    <div class="visual">
+
+      <div class="accent-dot" aria-hidden="true"></div>
+
+      <div class="letters" aria-hidden="true">
+        <span>T</span>
+        <span>Y</span>
+        <span>PE</span>
+      </div>
+
+      <div class="core" aria-hidden="true"></div>
+
+      <div class="image-fragment" aria-hidden="true"></div>
+
+      <div class="sound" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i>
+        <i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
+
+      <div class="motion" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Headline and Text Block -->
+  <section class="content-block">
+    <h1 class="headline">
+      Explore<br>
+      Multimedia
+    </h1>
+    <strong>The idea</strong>
+    <div class="description">
+      One idea can take many forms. Text, image, sound, and motion work together to create meaning.
+    </div>
+  </section>
+
+  <!-- Bottom CTA Mark -->
+  <footer class="bottom">
+    <div class="mark">EXPLORE NOW</div>
+  </footer>
+
+</main>
+
+</body>
+</html>
