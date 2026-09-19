@@ -198,77 +198,77 @@ export default function Hero() {
           "
         >
           {/* Main Headline (Left) */}
-<div className="lg:col-span-6">
-  <h1
-    className="
-      font-display
-      text-[clamp(2.5rem,5.5vw,5.5rem)]
-      font-bold
-      uppercase
-      leading-[0.82]
-      tracking-[-0.07em]
-    "
-  >
-    <motion.span
-      variants={fadeInVariants}
-      className="
-        mb-2
-        block
-        font-mono
-        text-[0.28em]
-        font-normal
-        normal-case
-        tracking-[0.08em]
-        text-fg-muted
-      "
-    >
-      Hi! I am, Darryl
-    </motion.span>
+          <div className="lg:col-span-6">
+            <h1
+              className="
+                font-display
+                text-[clamp(2.5rem,5.5vw,5.5rem)]
+                font-bold
+                uppercase
+                leading-[0.82]
+                tracking-[-0.07em]
+              "
+            >
+              <motion.span
+                variants={fadeInVariants}
+                className="
+                  mb-2
+                  block
+                  font-mono
+                  text-[0.28em]
+                  font-normal
+                  normal-case
+                  tracking-[0.08em]
+                  text-fg-muted
+                "
+              >
+                Hi! I am, Darryl
+              </motion.span>
 
-    <span className="block overflow-hidden py-0.5">
-      <motion.span variants={textLineVariants} className="block">
-        I LIKE
-      </motion.span>
-    </span>
+              <span className="block overflow-hidden py-0.5">
+                <motion.span variants={textLineVariants} className="block">
+                  I LIKE
+                </motion.span>
+              </span>
 
-    <span className="block overflow-hidden py-0.5">
-      <motion.span variants={textLineVariants} className="block">
-        MAKING
-      </motion.span>
-    </span>
+              <span className="block overflow-hidden py-0.5">
+                <motion.span variants={textLineVariants} className="block">
+                  MAKING
+                </motion.span>
+              </span>
 
-    <span className="block overflow-hidden py-0.5">
-      <motion.span
-        variants={textLineVariants}
-        className="relative block w-fit"
-      >
-        THINGS
-      </motion.span>
-    </span>
+              <span className="block overflow-hidden py-0.5">
+                <motion.span
+                  variants={textLineVariants}
+                  className="relative block w-fit"
+                >
+                  THINGS
+                </motion.span>
+              </span>
 
-    <span className="block overflow-hidden py-0.5">
-      <motion.span
-        variants={textLineVariants}
-        className="relative block w-fit"
-      >
-        WORK.
-        <motion.span
-          variants={underlineVariants}
-          aria-hidden="true"
-          className="
-            absolute
-            bottom-0
-            left-0
-            -z-10
-            h-[0.2em]
-            w-full
-            bg-accent
-          "
-        />
-      </motion.span>
-    </span>
-  </h1>
-</div>
+              <span className="block overflow-hidden py-0.5">
+                <motion.span
+                  variants={textLineVariants}
+                  className="relative block w-fit"
+                >
+                  WORK.
+                  <motion.span
+                    variants={underlineVariants}
+                    aria-hidden="true"
+                    className="
+                      absolute
+                      bottom-0
+                      left-0
+                      -z-10
+                      h-[0.2em]
+                      w-full
+                      bg-accent
+                    "
+                  />
+                </motion.span>
+              </span>
+            </h1>
+          </div>
 
 
           {/* Spacer for Center Portrait */}
