@@ -214,43 +214,44 @@ export default function Projects() {
     >
       <div className="mx-auto max-w-7xl">
         {/* Section heading */}
-        <div className="mb-10 flex flex-col gap-5 sm:mb-12 sm:flex-row sm:items-end sm:justify-between">
-        <h2
-          className="
-            font-display
-            text-4xl
-            font-bold
-            uppercase
-            leading-none
-            tracking-[-0.06em]
-            sm:text-5xl
-            lg:text-6xl
-          "
-        >
-          Projects
-        </h2>
+        <div className="mb-10 sm:mb-12">
+          <h2
+            className="
+              font-display
+              text-4xl
+              font-bold
+              uppercase
+              leading-none
+              tracking-[-0.06em]
+              sm:text-5xl
+              lg:text-6xl
+            "
+          >
+            Projects
+          </h2>
 
-        <div className="flex items-center gap-2 sm:pb-1">
-          <span
+          <div className="mt-3 flex items-center gap-2">
+           <span
             className="
               font-mono
-              text-[10px]
+              text-[11px]
               font-medium
               uppercase
               tracking-[0.12em]
               text-fg-muted
+              sm:text-sm
+              lg:text-base
             "
           >
             Click a project to view case study
           </span>
-
-          <ArrowDown
-            size={16}
-            strokeWidth={2}
-            aria-hidden="true"
-          />
+            <ArrowDown
+              size={15}
+              strokeWidth={2}
+              aria-hidden="true"
+            />
+          </div>
         </div>
-      </div>
         {/* Project grid */}
         <div
           className="
